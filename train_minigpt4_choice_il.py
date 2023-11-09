@@ -194,7 +194,7 @@ def data_collator(batch, image_processor):
         # We load images from disk on-the-fly to save memory
         # Elements of raw_images have shape (3, H, W)
         if sample['raw_images'] == 'none':
-            raw_image = torch.zeros((3, IMAGE_SIZE, IMAGE_SIZE), dtype=torch.float32) + 0.5 # mean = 0.5
+            raw_image = torch.zeros((3, IMAGE_SIZE, IMAGE_SIZE), dtype=torch.float32) + 1
             raw_images.append(raw_image)
         else:
             asin = sample['raw_images'].upper()
@@ -203,7 +203,7 @@ def data_collator(batch, image_processor):
                 image_tensor = image_processor(image, return_tensors="pt")['pixel_values'][0]
                 raw_images.append(image_tensor)
             except:
-                image_tensor = torch.zeros((3, IMAGE_SIZE, IMAGE_SIZE), dtype=torch.float32) + 0.5 # mean = 0.5
+                image_tensor = torch.zeros((3, IMAGE_SIZE, IMAGE_SIZE), dtype=torch.float32) + 1
                 raw_images.append(image_tensor)
                 print("Image not found: " + os.path.join(IMAGE_PATH, asin + ".jpg"))
         
