@@ -60,6 +60,19 @@ IMAGE_PATH = "../all_images"
 IMAGE_SIZE = 224
 CKPT_PATH = "ckpts"
 
+task_to_keys = {
+    "cola": ("sentence", None),
+    "mnli": ("premise", "hypothesis"),
+    "mrpc": ("sentence1", "sentence2"),
+    "qnli": ("question", "sentence"),
+    "qqp": ("question1", "question2"),
+    "rte": ("sentence1", "sentence2"),
+    "sst2": ("sentence", None),
+    "stsb": ("sentence1", "sentence2"),
+    "wnli": ("sentence1", "sentence2"),
+}
+logger = get_logger(__name__)
+
 def process(s):
     s = s.lower().replace('"', '').replace("'", "").strip()
     s = s.replace('[sep]', '[SEP]')
@@ -165,9 +178,7 @@ def get_dataset(split, tokenizer=None):
     }
     return Dataset.from_dict(dataset)
 
-image_processor = AutoImageProcessor.from_pretrained("google/vit-base-patch16-224-in21k")
-
-def data_collator(batch):
+def data_collator(batch, image_processor):
     state_input_ids, state_attention_mask, action_input_ids, action_attention_mask, raw_images, sizes, labels, images = [
     ], [], [], [], [], [], [], []
     transform = transforms.Compose([
@@ -183,17 +194,16 @@ def data_collator(batch):
         # We load images from disk on-the-fly to save memory
         # Elements of raw_images have shape (3, H, W)
         if sample['raw_images'] == 'none':
-            raw_image = torch.zeros((3, IMAGE_SIZE, IMAGE_SIZE), dtype=torch.float32)
+            raw_image = torch.zeros((3, IMAGE_SIZE, IMAGE_SIZE), dtype=torch.float32) + 0.5 # mean = 0.5
             raw_images.append(raw_image)
         else:
             asin = sample['raw_images'].upper()
             try: # just in case the image doesn't exist due to some strange reasons
                 image = Image.open(os.path.join(IMAGE_PATH, asin + ".jpg"))
-                image_tensor = transform(image).to(torch.float32)
-                # raw_images.append(image_processor(image_tensor, return_tensors="pt"))
+                image_tensor = image_processor(image, return_tensors="pt")['pixel_values'][0]
                 raw_images.append(image_tensor)
             except:
-                image_tensor = torch.zeros((3, IMAGE_SIZE, IMAGE_SIZE), dtype=torch.float32)
+                image_tensor = torch.zeros((3, IMAGE_SIZE, IMAGE_SIZE), dtype=torch.float32) + 0.5 # mean = 0.5
                 raw_images.append(image_tensor)
                 print("Image not found: " + os.path.join(IMAGE_PATH, asin + ".jpg"))
         
@@ -219,21 +229,6 @@ def get_dataloader(split, tokenizer, shuffle=True, batch_size=1):
     return DataLoader(
         get_dataset(split), shuffle=shuffle, collate_fn=data_collator, batch_size=batch_size
     )
-
-task_to_keys = {
-    "cola": ("sentence", None),
-    "mnli": ("premise", "hypothesis"),
-    "mrpc": ("sentence1", "sentence2"),
-    "qnli": ("question", "sentence"),
-    "qqp": ("question1", "question2"),
-    "rte": ("sentence1", "sentence2"),
-    "sst2": ("sentence", None),
-    "stsb": ("sentence1", "sentence2"),
-    "wnli": ("sentence1", "sentence2"),
-}
-
-model_choice = "BERT"
-logger = get_logger(__name__)
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -418,7 +413,6 @@ def main():
     #
     # In distributed training, the .from_pretrained methods guarantee that only one local process can concurrently
     # download model & vocab.
-    # tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
     config = BertConfigForWebshop(image=args.image, pretrain_bert=args.pretrain)
 
     print("Using text encoder: {}".format(args.model_name))
@@ -430,70 +424,6 @@ def main():
                             '[clicked button_]'], special_tokens=True)
         print(len(tokenizer))
         model = BertModelForWebshop(config)
-    elif args.model_name == "bert-large":
-        tokenizer = AutoTokenizer.from_pretrained('bert-large-uncased')
-        print(len(tokenizer))
-        tokenizer.add_tokens(['[button]', '[button_]', '[clicked button]',
-                            '[clicked button_]'], special_tokens=True)
-        print(len(tokenizer))
-        model = BertLargeForWebshop(config)
-    elif args.model_name == "t5-small":
-        tokenizer = T5Tokenizer.from_pretrained("t5-small", truncation_side='left')
-        print(len(tokenizer))
-        tokenizer.add_tokens(['[button]', '[button_]', '[clicked button]',
-                            '[clicked button_]'], special_tokens=True)
-        print(len(tokenizer))
-        model = T5SmallForWebshop(config, token_embed_size=len(tokenizer))
-    elif args.model_name == "t5-base":
-        tokenizer = T5Tokenizer.from_pretrained("t5-base", truncation_side='left')
-        print(len(tokenizer))
-        tokenizer.add_tokens(['[button]', '[button_]', '[clicked button]',
-                            '[clicked button_]'], special_tokens=True)
-        print(len(tokenizer))
-        model = T5BaseForWebshop(config, token_embed_size=len(tokenizer))
-    elif args.model_name == "t5-large":
-        tokenizer = T5Tokenizer.from_pretrained("t5-large", truncation_side='left')
-        print(len(tokenizer))
-        tokenizer.add_tokens(['[button]', '[button_]', '[clicked button]',
-                            '[clicked button_]'], special_tokens=True)
-        print(len(tokenizer))
-        model = T5LargeForWebshop(config, token_embed_size=len(tokenizer))
-    elif args.model_name == "flan-t5-small":
-        tokenizer = AutoTokenizer.from_pretrained("google/flan-t5-small", truncation_side='left')
-        print(len(tokenizer))
-        tokenizer.add_tokens(['[button]', '[button_]', '[clicked button]',
-                            '[clicked button_]'], special_tokens=True)
-        print(len(tokenizer))
-        model = FlanT5SmallForWebshop(config, token_embed_size=len(tokenizer))
-    elif args.model_name == "flan-t5-base":
-        config = FlanT5ConfigForWebshop(image=args.image, pretrain_bert=args.pretrain)
-        tokenizer = AutoTokenizer.from_pretrained("google/flan-t5-base", truncation_side='left')
-        print(len(tokenizer))
-        tokenizer.add_tokens(['[button]', '[button_]', '[clicked button]',
-                            '[clicked button_]'], special_tokens=True)
-        print(len(tokenizer))
-        model = FlanT5BaseForWebshop(config, token_embed_size=len(tokenizer))
-    elif args.model_name == "flan-t5-large":
-        tokenizer = AutoTokenizer.from_pretrained("google/flan-t5-large", truncation_side='left')
-        print(len(tokenizer))
-        tokenizer.add_tokens(['[button]', '[button_]', '[clicked button]',
-                            '[clicked button_]'], special_tokens=True)
-        print(len(tokenizer))
-        model = FlanT5LargeForWebshop(config, token_embed_size=len(tokenizer))
-    elif args.model_name == "roberta-base":
-        tokenizer = RobertaTokenizer.from_pretrained('roberta-base', truncation_side='left')
-        print(len(tokenizer))
-        tokenizer.add_tokens(['[button]', '[button_]', '[clicked button]',
-                            '[clicked button_]'], special_tokens=True)
-        print(len(tokenizer))
-        model = RobertaBaseForWebshop(config, token_embed_size=len(tokenizer))
-    elif args.model_name == "roberta-large":
-        tokenizer = RobertaTokenizer.from_pretrained('roberta-large', truncation_side='left')
-        print(len(tokenizer))
-        tokenizer.add_tokens(['[button]', '[button_]', '[clicked button]',
-                            '[clicked button_]'], special_tokens=True)
-        print(len(tokenizer))
-        model = RobertaLargeForWebshop(config, token_embed_size=len(tokenizer))
     elif args.model_name == "bert-vit":
         tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
         print(len(tokenizer))
@@ -501,7 +431,6 @@ def main():
                             '[clicked button_]'], special_tokens=True)
         print(len(tokenizer))
         model = BertVitForWebshop(config)
-        image_processor = AutoImageProcessor.from_pretrained("google/vit-base-patch16-224-in21k")
     else:
         print("Model not supported")
         exit(1)
@@ -510,18 +439,17 @@ def main():
     
     train_dataset = get_dataset("train", tokenizer=tokenizer)
     eval_dataset = get_dataset("eval", tokenizer=tokenizer)
-
-    # # Log a few random samples from the training set:
-    # for index in random.sample(range(len(train_dataset)), 3):
-    #     logger.info(
-    #         f"Sample {index} of the training set: {train_dataset[index]}.")
+    
+    image_processor = AutoImageProcessor.from_pretrained("google/vit-base-patch16-224-in21k")
+    collate_fn_with_image_processor = partial(data_collator, image_processor=image_processor)
 
     # DataLoaders creation:
     train_dataloader = DataLoader(
-        train_dataset, shuffle=True, collate_fn=data_collator, batch_size=args.per_device_train_batch_size
+        train_dataset, shuffle=True, collate_fn=collate_fn_with_image_processor, batch_size=args.per_device_train_batch_size
     )
     eval_dataloader = DataLoader(
-        eval_dataset, collate_fn=data_collator, batch_size=args.per_device_eval_batch_size)
+        eval_dataset, collate_fn=collate_fn_with_image_processor, batch_size=args.per_device_eval_batch_size
+    )
 
     # Optimizer
     # Split weights in two groups, one with weight decay and the other not.
