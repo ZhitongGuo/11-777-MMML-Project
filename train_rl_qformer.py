@@ -5,9 +5,11 @@ import torch
 from collections import defaultdict
 
 import logger
-from agent import Agent, TransitionPG
+from agent_qformer import Agent, TransitionPG
 from env import WebEnv
 from tqdm import tqdm
+
+from transformers import Blip2Processor
 
 logging.getLogger().setLevel(logging.CRITICAL)
 
@@ -85,6 +87,11 @@ def train(agent, eval_env, test_env, envs, args):
 
     bar = tqdm(total=args.max_steps)
     for step in range(1, args.max_steps + 1):
+        # print(info['raw_image'])
+        # print(type(ob))
+        # print("Ob: {}".format(ob))
+        # print(type(info))
+        # print("Info: {}".format(info))
         # get actions from policy
         action_strs, action_ids, values = agent.act(states, valids, method=args.exploration_method)
         
@@ -103,6 +110,9 @@ def train(agent, eval_env, test_env, envs, args):
         next_states, next_valids, rewards, dones = [], [], [], []
         for env, action_str, action_id, state in zip(envs, action_strs, action_ids, states):
             ob, reward, done, info = env.step(action_str)
+            # print(info['raw_image'])
+            # if info['raw_image'] is None:
+            #     print(action_str)
             if state0 is None:  # first state
                 state0 = (ob, info)
                 r_att = r_opt = 0
@@ -176,7 +186,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     # logging
     parser.add_argument('--seed', default=0, type=int)
-    parser.add_argument('--output_dir', default='logs')
+    parser.add_argument('--output_dir', default='rl_logs')
     parser.add_argument('--ckpt_freq', default=10000, type=int)
     parser.add_argument('--eval_freq', default=500, type=int)
     parser.add_argument('--test_freq', default=5000, type=int)
@@ -200,6 +210,9 @@ def parse_args():
     # model
     parser.add_argument('--network', default='bert', type=str, choices=['bert', 'rnn'])
     parser.add_argument('--bert_path', default="", type=str, help='which bert to load')
+    
+    parser.add_argument('--qformer_path', default="", type=str, help='which qformer to load')
+    
     parser.add_argument('--embedding_dim', default=128, type=int)
     parser.add_argument('--hidden_dim', default=128, type=int)
     parser.add_argument('--grad_encoder', default=1, type=int)
@@ -232,6 +245,7 @@ def parse_args():
 import psutil
 FEAT_CONV = '/home/haoyang/webshop/data/feat_conv.pt'
 feat_conv = torch.load(FEAT_CONV)
+import json
 
 def main():
     args, unknown = parse_args()
@@ -243,19 +257,40 @@ def main():
     print(unknown)
     print(args)
     configure_logger(args.output_dir, args.wandb)
-    agent = Agent(args)
-    train_env = WebEnv(args, split='train', id='train_', feat_conv=feat_conv)
+    image_processor = Blip2Processor.from_pretrained("Salesforce/blip2-opt-2.7b").image_processor
+    agent = Agent(args, image_processor)
+    
+    # To save RAM, reate a shared object for mappings in dataset
+    cache = {"asin2name": None, "name2asin": None}
+
+    DEFAULT_FILE_PATH = "../data/items_shuffle.json"
+    # We want to map image url to its product ASIN because in WebEnv we only have the URL
+    # and we need ASIN to access downloaded images
+    url2asin = {}
+    f = open(DEFAULT_FILE_PATH, 'r')
+    data = json.load(f)
+    for d in data:
+        if ('product_information' not in d) or ('images' not in d) or ('asin' not in d):
+            continue
+        url = d['images'][0]
+        if len(url) == 0 and len(d['images']) > 1:
+            url = d['images'][1]
+        url2asin[url] = d['asin'].upper()
+    data = None # save RAM
+    f.close()
+
+    train_env = WebEnv(args, split='train', id='train_', feat_conv=feat_conv, cache=cache, url2asin=url2asin)
     print("-----TRAINING ENV LOADED------")
-    memory_info = psutil.Process().memory_info()
-    print(f"243, RSS: {memory_info.rss / (1024 * 1024):.2f} MB")
+    # memory_info = psutil.Process().memory_info()
+    # print(f"243, RSS: {memory_info.rss / (1024 * 1024):.2f} MB")
     server = train_env.env.server
-    memory_info = psutil.Process().memory_info()
-    print(f"246, RSS: {memory_info.rss / (1024 * 1024):.2f} MB")
-    eval_env = WebEnv(args, split='eval', id='eval_', server=server, feat_conv=feat_conv)
-    print("LINE 244")
-    test_env = WebEnv(args, split='test', id='test_', server=server, feat_conv=feat_conv)
-    print("LINE 245")
-    envs = [WebEnv(args, split='train', server=server, id=f'train{i}_', feat_conv=feat_conv) for i in range(args.num_envs)]
+    # memory_info = psutil.Process().memory_info()
+    # print(f"246, RSS: {memory_info.rss / (1024 * 1024):.2f} MB")
+    eval_env = WebEnv(args, split='eval', id='eval_', server=server, feat_conv=feat_conv, cache=cache, url2asin=url2asin)
+    # print("LINE 244")
+    test_env = WebEnv(args, split='test', id='test_', server=server, feat_conv=feat_conv, cache=cache, url2asin=url2asin)
+    # print("LINE 245")
+    envs = [WebEnv(args, split='train', server=server, id=f'train{i}_', feat_conv=feat_conv, cache=cache, url2asin=url2asin) for i in range(args.num_envs)]
     print("loaded")
     train(agent, eval_env, test_env, envs, args)
 
