@@ -23,7 +23,7 @@ patch_resize_transform = transforms.Compose([lambda image: image.convert("RGB"),
 
 tokenizer = OFATokenizer.from_pretrained(ckpt_dir)
 
-txt = " what does the image describe?"
+txt = "Is this image a black cat?"
 inputs = tokenizer([txt], return_tensors="pt").input_ids
 img = Image.open(path_to_image)
 patch_img = patch_resize_transform(img).unsqueeze(0)
