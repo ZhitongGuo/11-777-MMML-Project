@@ -1,6 +1,4 @@
 # load WebEnV
-import os
-import sys
 import json
 from train_rl import parse_args as webenv_args
 from env import WebEnv  # TODO: just use webshopEnv?
@@ -18,7 +16,8 @@ from minigpt4.processors.blip_processors import Blip2ImageTrainProcessor, Blip2I
 from transformers import StoppingCriteriaList
 from minigpt4.conversation.conversation import StoppingCriteriaSub
 
-'''import os
+''' for debug
+import os
 print(os.getcwd())
 os.chdir('baseline_models/')
 print(os.getcwd())'''
@@ -154,40 +153,15 @@ def predict_v(obs, info, model, tokenizer, prompt, softmax=False, rule=False, ba
     batch = my_data_collator([batch])
     # make batch cuda
     batch = {k: v.cuda() for k, v in batch.items()}
-    state_input_ids = batch['state_input_ids']
-    state_attention_mask = batch['state_attention_mask']
-    action_input_ids = batch['action_input_ids']
-    action_attention_mask = batch['action_attention_mask']
-    sizes = batch['sizes']
     raw_images = batch['raw_images']
     images = batch['images']
     labels = batch['labels']
     print("IMAGE={}".format(raw_images))
     # prepare image input
     image_emb, _ = model.encode_img(raw_images) 
-
-    eval_processor = Blip2ImageEvalProcessor.from_config({'name': 'blip2_image_eval', 'image_size': 224})
-
-    def preprocess_img(image, processor):
-        image = Image.new('RGB', (224, 224), (255,255,255))
-        raw_image = image.convert('RGB')
-        # print(raw_image)
-        # raw_image = Image.open(image).convert('RGB')
-        device = torch.device("cuda:{}".format(gpu_id))
-        return processor(raw_image).unsqueeze(0).to(device)
-
-    image = preprocess_img("", eval_processor)
-    image_emb, _ = model.encode_img(image) # image --> ViT --> Q-Former --> image_emb
     print(image_emb)
     # prepare text input
     text = init_prompt + prompt[-(2000-len(init_prompt)):]
-
-    prompt = """Give the following image: <Img>ImageContent</Img>. 
-    You will be able to see the image once I provide it to you. 
-    Please answer my questions. ###Human: <Img><ImageHere></Img> """
-    question = "describe the content of the image "
-    suffix = "###Assistant: "
-    text = prompt + question +  suffix
     print(text)
     # input to model
     print(len(text), image_emb.shape)
@@ -195,12 +169,11 @@ def predict_v(obs, info, model, tokenizer, prompt, softmax=False, rule=False, ba
     current_max_len = embs.shape[1] + max_new_tokens
     begin_idx = max(0, current_max_len - max_length)
     embs = embs[:, begin_idx:]
-
+    print(embs.shape)
     # stop words from demo
     stop_words_ids = [[835], [2277, 29937]]
     stop_words_ids = [torch.tensor(ids).to(device='cuda:{}'.format(gpu_id)) for ids in stop_words_ids]
     stopping_criteria = StoppingCriteriaList([StoppingCriteriaSub(stops=stop_words_ids)])
-    print(embs.shape)
     generation_kwargs = dict(
         inputs_embeds=embs,
         max_new_tokens=max_new_tokens,
@@ -218,8 +191,8 @@ def predict_v(obs, info, model, tokenizer, prompt, softmax=False, rule=False, ba
     output_text = model.llama_tokenizer.decode(output_token, skip_special_tokens=True)
     # extract output action
     print("Output Text: {}".format(output_text))
-    output_text = output_text.split('###')[0]  # remove the stop sign '###'
-    output_text = output_text.split('Assistant:')[-1].strip()
+    # output_text = output_text.split('###')[0]  # remove the stop sign '###'
+    # output_text = output_text.split('Assistant:')[-1].strip()
     action = output_text.lstrip(' ')
     return action
 
