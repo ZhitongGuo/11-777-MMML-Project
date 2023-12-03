@@ -4,13 +4,11 @@ from train_rl import parse_args as webenv_args
 from env import WebEnv  # TODO: just use webshopEnv?
 import torch
 from models.custom_qformer import QFormerConfigForWebshop, QFormerModelForWebshop
-from PIL import Image
 import torch
 from train_choice_il_qformer import *
 from transformers import BartForConditionalGeneration, BartTokenizer
 from tqdm import tqdm
 from functools import partial
-import random
 from minigpt4.models.minigpt4 import MiniGPT4
 from minigpt4.processors.blip_processors import Blip2ImageTrainProcessor, Blip2ImageEvalProcessor
 from transformers import StoppingCriteriaList
@@ -72,6 +70,35 @@ Observation: You have clicked 3 ounce (pack of 1).
 Action: click[Buy Now]
 """
 
+FEAT_CONV = '/home/haoyang/webshop/data/feat_conv.pt'
+feat_conv = torch.load(FEAT_CONV)
+cache = {"asin2name": None, "name2asin": None}
+DEFAULT_FILE_PATH = "../data/items_shuffle.json"
+# We want to map image url to its product ASIN because in WebEnv we only have the URL
+# and we need ASIN to access downloaded images
+url2asin = {}
+f = open(DEFAULT_FILE_PATH, 'r')
+print("Line 19")
+data = json.load(f)
+print("Line 22")
+for d in data:
+    if ('product_information' not in d) or ('images' not in d) or ('asin' not in d):
+        continue
+    url = d['images'][0]
+    if len(url) == 0 and len(d['images']) > 1:
+        url = d['images'][1]
+    url2asin[url] = d['asin'].upper()
+data = None # save RAM
+f.close()
+print("Line 32")
+args = webenv_args()[0]
+env = WebEnv(args, split='test', feat_conv=feat_conv, cache=cache, url2asin=url2asin)
+print('env loaded')
+# load Model
+bart_tokenizer = BartTokenizer.from_pretrained('facebook/bart-large')
+image_processor = Blip2ImageEvalProcessor.from_config({'name': 'blip2_image_eval', 'image_size': 224})
+my_data_collator = partial(data_collator, image_processor=image_processor)
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Finetune a transformers model on a text classification task")
@@ -112,7 +139,7 @@ def model_generate(*args, **kwargs):
         return output
         
 
-def predict_v(obs, info, model, tokenizer, prompt, softmax=False, rule=False, bart_model=None):
+def predict_v(obs, info, model, prompt, rule=False, bart_model=None):
     valid_acts = info['valid']
     if valid_acts[0].startswith('search['):
         if bart_model is None:
@@ -131,31 +158,16 @@ def predict_v(obs, info, model, tokenizer, prompt, softmax=False, rule=False, ba
         else:
             assert 'click[buy now]' in valid_acts
             return 'click[buy now]'
-                
-    states = process(obs)
-    actions = list(map(process, valid_acts))
-    state_encodings = tokenizer(states, padding='max_length', max_length=512, truncation=True)
-    action_encodings = tokenizer(actions, padding='max_length', max_length=128, truncation=True)
 
     raw_image = info.get('raw_image')
     print("RAW_IMAGE={}".format(raw_image))
     batch = {
-        'state_input_ids': state_encodings['input_ids'],
-        'state_attention_mask': state_encodings['attention_mask'],
-        'action_input_ids': action_encodings['input_ids'],
-        'action_attention_mask': action_encodings['attention_mask'],
-        'sizes': len(valid_acts),
-        # 'images': torch.tensor(images),
-        'images': info['image_feat'].tolist(),
         'raw_images': raw_image,
-        'labels': 0
     }
     batch = my_data_collator([batch])
     # make batch cuda
     batch = {k: v.cuda() for k, v in batch.items()}
     raw_images = batch['raw_images']
-    images = batch['images']
-    labels = batch['labels']
     print("IMAGE={}".format(raw_images))
     # prepare image input
     image_emb, _ = model.encode_img(raw_images) 
@@ -194,10 +206,11 @@ def predict_v(obs, info, model, tokenizer, prompt, softmax=False, rule=False, ba
     # output_text = output_text.split('###')[0]  # remove the stop sign '###'
     # output_text = output_text.split('Assistant:')[-1].strip()
     action = output_text.lstrip(' ')
+    print("**action: ", action)
     return action
 
 
-def episode(model, tokenizer, idx=None, verbose=False, softmax=False, rule=False, bart_model=None):
+def episode(model, idx=None, verbose=False, rule=False, bart_model=None):
     obs, info = env.reset(idx)
     if verbose:
         print(info['goal'])
@@ -207,7 +220,7 @@ def episode(model, tokenizer, idx=None, verbose=False, softmax=False, rule=False
         prompt, exprompt = generate_prompt(exprompt, i, obs, action)
         if action and action.startswith('think'):
             obs = 'OK.'
-        action = predict_v(obs, info, model, tokenizer, prompt, softmax=softmax, rule=rule, bart_model=bart_model)
+        action = predict_v(obs, info, model, prompt, rule=rule, bart_model=bart_model)
         if verbose:
             print(action)
         obs, reward, done, info = env.step(action)
@@ -217,36 +230,6 @@ def episode(model, tokenizer, idx=None, verbose=False, softmax=False, rule=False
 
 
 if __name__ == "__main__":
-    FEAT_CONV = '/home/haoyang/webshop/data/feat_conv.pt'
-    feat_conv = torch.load(FEAT_CONV)
-    cache = {"asin2name": None, "name2asin": None}
-    DEFAULT_FILE_PATH = "../data/items_shuffle.json"
-    # We want to map image url to its product ASIN because in WebEnv we only have the URL
-    # and we need ASIN to access downloaded images
-    url2asin = {}
-    f = open(DEFAULT_FILE_PATH, 'r')
-    print("Line 19")
-    data = json.load(f)
-    print("Line 22")
-    for d in data:
-        if ('product_information' not in d) or ('images' not in d) or ('asin' not in d):
-            continue
-        url = d['images'][0]
-        if len(url) == 0 and len(d['images']) > 1:
-            url = d['images'][1]
-        url2asin[url] = d['asin'].upper()
-    data = None # save RAM
-    f.close()
-    print("Line 32")
-    args = webenv_args()[0]
-    env = WebEnv(args, split='test', feat_conv=feat_conv, cache=cache, url2asin=url2asin)
-    print('env loaded')
-    # load Model
-    bart_tokenizer = BartTokenizer.from_pretrained('facebook/bart-large')
-
-    image_processor = Blip2ImageEvalProcessor.from_config({'name': 'blip2_image_eval', 'image_size': 224})
-    my_data_collator = partial(data_collator, image_processor=image_processor)
-
     args = parse_args()
     if args.mem:
         env.env.num_prev_obs = 1
@@ -261,17 +244,6 @@ if __name__ == "__main__":
         print('bart model loaded', args.bart_path)
     else:
         bart_model = None
-    config = QFormerConfigForWebshop(image=True, pretrain_bert=True)
-    if args.model_name == "qformer":
-        tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
-        print(len(tokenizer))
-        tokenizer.add_tokens(['[button]', '[button_]', '[clicked button]',
-                                '[clicked button_]'], special_tokens=True)
-        print(len(tokenizer))
-        model = QFormerModelForWebshop(config, token_embed_size=len(tokenizer))
-    else:
-        print("Model not supported")
-        exit(1)
 
     print("Load minigpt4")
     model_config = {
@@ -308,13 +280,12 @@ if __name__ == "__main__":
     print("Model loaded")
     model.cuda()
     print("Model moved to GPU")
-    print("choice model: {}".format(args.model_name))
 
     scores_softmax, scores_rule = [], []
     bar = tqdm(total=500)
     for i in range(500):
         print(i)
-        score_softmax, score_rule = episode(model, tokenizer, idx=i, softmax=args.softmax, bart_model=bart_model), episode(model, tokenizer, idx=i, rule=True)
+        score_softmax, score_rule = episode(model, idx=i, bart_model=bart_model), episode(model, idx=i, rule=True)
         # print(i, '|', score_softmax * 10, score_rule * 10)  # env score is 0-10, paper is 0-100
         scores_softmax.append(score_softmax)
         scores_rule.append(score_rule)
