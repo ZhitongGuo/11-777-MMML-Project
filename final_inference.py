@@ -1,28 +1,33 @@
 # load WebEnV
+import os
+import sys
 import json
 from train_rl import parse_args as webenv_args
 from env import WebEnv  # TODO: just use webshopEnv?
 import torch
 from models.custom_qformer import QFormerConfigForWebshop, QFormerModelForWebshop
+from PIL import Image
 import torch
 from train_choice_il_qformer import *
 from transformers import BartForConditionalGeneration, BartTokenizer
 from tqdm import tqdm
 from functools import partial
+import random
 from minigpt4.models.minigpt4 import MiniGPT4
 from minigpt4.processors.blip_processors import Blip2ImageTrainProcessor, Blip2ImageEvalProcessor
 from transformers import StoppingCriteriaList
 from minigpt4.conversation.conversation import StoppingCriteriaSub
 
-''' for debug
+IMAGE_PATH = "../all_images"
+
+''' for debug'''
 import os
 print(os.getcwd())
 os.chdir('baseline_models/')
-print(os.getcwd())'''
+print(os.getcwd())
 
 # TODO: give an exmaple with images. one-shot example prompt
-init_prompt = """Webshop
-Instruction:
+init_prompt = """Instruction:
 i would like a 3 ounce bottle of bright citrus deodorant for sensitive skin, and price lower than 50.00 dollars
 [Search]
 
@@ -78,9 +83,7 @@ DEFAULT_FILE_PATH = "../data/items_shuffle.json"
 # and we need ASIN to access downloaded images
 url2asin = {}
 f = open(DEFAULT_FILE_PATH, 'r')
-print("Line 19")
 data = json.load(f)
-print("Line 22")
 for d in data:
     if ('product_information' not in d) or ('images' not in d) or ('asin' not in d):
         continue
@@ -90,10 +93,10 @@ for d in data:
     url2asin[url] = d['asin'].upper()
 data = None # save RAM
 f.close()
-print("Line 32")
 args = webenv_args()[0]
 env = WebEnv(args, split='test', feat_conv=feat_conv, cache=cache, url2asin=url2asin)
 print('env loaded')
+
 # load Model
 bart_tokenizer = BartTokenizer.from_pretrained('facebook/bart-large')
 image_processor = Blip2ImageEvalProcessor.from_config({'name': 'blip2_image_eval', 'image_size': 224})
@@ -124,22 +127,15 @@ def bart_predict(input, model, skip_special_tokens=True, **kwargs):
 def generate_prompt(exprompt, i, observation, action=None):
     if i:
       exprompt += f' {action}\nObservation: {observation}\n\nAction:'
-      prompt = exprompt + f' {action}\nObservation: {observation}\n\n<Img><ImageHere></Img>\n\nAction:'
+      prompt = exprompt + f' {action}\nObservation: {observation}\n\n<Img><ImageHere></Img>\n\n###Action: '
     else:
       exprompt += f'{observation}\n\nAction:'
-      prompt = exprompt + f'{observation}\n\n<Img><ImageHere></Img>\n\nAction:'
+      prompt = exprompt + f'{observation}\n\n<Img><ImageHere></Img>\n\n###Action: '
     
     return prompt, exprompt
 
 
-def model_generate(*args, **kwargs):
-        # for 8 bit and 16 bit compatibility
-        with model.maybe_autocast():
-            output = model.llama_model.generate(*args, **kwargs)
-        return output
-        
-
-def predict_v(obs, info, model, prompt, rule=False, bart_model=None):
+def predict_v(obs, info, model, prompt, idx, softmax=False, rule=False, bart_model=None):
     valid_acts = info['valid']
     if valid_acts[0].startswith('search['):
         if bart_model is None:
@@ -158,34 +154,50 @@ def predict_v(obs, info, model, prompt, rule=False, bart_model=None):
         else:
             assert 'click[buy now]' in valid_acts
             return 'click[buy now]'
+                
+    states = process(obs)
+    actions = list(map(process, valid_acts))
+    raw_image_asin = info.get('raw_image').upper()
 
-    raw_image = info.get('raw_image')
-    print("RAW_IMAGE={}".format(raw_image))
-    batch = {
-        'raw_images': raw_image,
-    }
-    batch = my_data_collator([batch])
-    # make batch cuda
-    batch = {k: v.cuda() for k, v in batch.items()}
-    raw_images = batch['raw_images']
-    print("IMAGE={}".format(raw_images))
-    # prepare image input
-    image_emb, _ = model.encode_img(raw_images) 
-    print(image_emb)
-    # prepare text input
-    text = init_prompt + prompt[-(2000-len(init_prompt)):]
+    eval_processor = Blip2ImageEvalProcessor.from_config({'name': 'blip2_image_eval', 'image_size': 224})
+    if raw_image_asin == "NONE":
+        print("No image")
+        image = eval_processor(Image.new('RGB', (224, 224), (255, 255, 255))).unsqueeze(0).cuda()
+    else:
+        try:
+            pil_image = Image.open(os.path.join(IMAGE_PATH, raw_image_asin + ".jpg"))
+            image = eval_processor(pil_image).unsqueeze(0).cuda()
+            pil_image.save(f"{idx}.jpg")
+            print("Image saved to ")
+        except:
+            image = eval_processor(Image.new('RGB', (224, 224), (255, 255, 255))).unsqueeze(0).cuda()
+            print("This is rare")
+    image_emb, _ = model.encode_img(image)
+    text_length = 5600
+    text = init_prompt + prompt[-(text_length-len(init_prompt)):]
+    print("*" * 10)
     print(text)
-    # input to model
-    print(len(text), image_emb.shape)
+
+    # LLM hyper-params
+    max_new_tokens=300
+    num_beams=1
+    min_length=1
+    top_p=0.9
+    repetition_penalty=1.05
+    length_penalty=1
+    temperature=1.0
+    max_length=2000
+
     embs = model.get_context_emb(text, [image_emb]) # batch_size, seq_len, hidden_dim
     current_max_len = embs.shape[1] + max_new_tokens
     begin_idx = max(0, current_max_len - max_length)
     embs = embs[:, begin_idx:]
-    print(embs.shape)
-    # stop words from demo
+    print("embs.shape={}".format(embs.shape))
+    
     stop_words_ids = [[835], [2277, 29937]]
     stop_words_ids = [torch.tensor(ids).to(device='cuda:{}'.format(gpu_id)) for ids in stop_words_ids]
     stopping_criteria = StoppingCriteriaList([StoppingCriteriaSub(stops=stop_words_ids)])
+
     generation_kwargs = dict(
         inputs_embeds=embs,
         max_new_tokens=max_new_tokens,
@@ -198,19 +210,26 @@ def predict_v(obs, info, model, prompt, rule=False, bart_model=None):
         length_penalty=length_penalty,
         temperature=float(temperature),
     )
+
+    def model_generate(*args, **kwargs):
+        # for 8 bit and 16 bit compatibility
+        with model.maybe_autocast():
+            output = model.llama_model.generate(*args, **kwargs)
+        return output
+    
     output_token = model_generate(**generation_kwargs)[0]
-    print("output: ", output_token)
-    output_text = model.llama_tokenizer.decode(output_token, skip_special_tokens=True)
-    # extract output action
-    print("Output Text: {}".format(output_text))
+    output_text = model.llama_tokenizer.decode(output_token, skip_special_tokens=True) # skip set to false?
     # output_text = output_text.split('###')[0]  # remove the stop sign '###'
     # output_text = output_text.split('Assistant:')[-1].strip()
+    print("{}'s Output Text: {}".format(idx, output_text))
+    
     action = output_text.lstrip(' ')
     print("**action: ", action)
+    print("*" * 10)
     return action
 
 
-def episode(model, idx=None, verbose=False, rule=False, bart_model=None):
+def episode(model, idx=None, verbose=False, softmax=False, rule=False, bart_model=None):
     obs, info = env.reset(idx)
     if verbose:
         print(info['goal'])
@@ -218,9 +237,10 @@ def episode(model, idx=None, verbose=False, rule=False, bart_model=None):
     action = None
     for i in range(100):
         prompt, exprompt = generate_prompt(exprompt, i, obs, action)
+        print("new prompt: ", exprompt)
         if action and action.startswith('think'):
             obs = 'OK.'
-        action = predict_v(obs, info, model, prompt, rule=rule, bart_model=bart_model)
+        action = predict_v(obs, info, model, prompt, idx, softmax=softmax, rule=rule, bart_model=bart_model)
         if verbose:
             print(action)
         obs, reward, done, info = env.step(action)
@@ -239,6 +259,7 @@ if __name__ == "__main__":
         env.env.num_prev_obs = 0
         env.env.num_prev_actions = 0
         print('no memory')
+    
     if args.bart:
         bart_model = BartForConditionalGeneration.from_pretrained(args.bart_path)
         print('bart model loaded', args.bart_path)
@@ -261,7 +282,7 @@ if __name__ == "__main__":
         'max_txt_len': 160,
         'end_sym': '###',
         'low_resource': True,
-        'prompt_template': '###Human: {} ###Assistant: ',
+        'prompt_template': '###Webshop Task: {} ###Assistant: ',
         'ckpt': 'prerained_minigpt4_7b.pth',
         'device_8bit': 0
     }      
@@ -276,16 +297,17 @@ if __name__ == "__main__":
     length_penalty=1
     temperature=1.0
     max_length=2000
+
+
     model = MiniGPT4.from_config(model_config).to('cuda:{}'.format(gpu_id))
     print("Model loaded")
-    model.cuda()
-    print("Model moved to GPU")
 
     scores_softmax, scores_rule = [], []
     bar = tqdm(total=500)
     for i in range(500):
         print(i)
-        score_softmax, score_rule = episode(model, idx=i, bart_model=bart_model), episode(model, idx=i, rule=True)
+        score_softmax = episode(model, idx=i, softmax=args.softmax, bart_model=bart_model)
+        score_rule = episode(model, idx=i, rule=True)
         # print(i, '|', score_softmax * 10, score_rule * 10)  # env score is 0-10, paper is 0-100
         scores_softmax.append(score_softmax)
         scores_rule.append(score_rule)
