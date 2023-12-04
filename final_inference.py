@@ -20,7 +20,7 @@ from minigpt4.conversation.conversation import StoppingCriteriaSub
 
 IMAGE_PATH = "../all_images"
 
-''' for debug'''
+# for debug
 import os
 print(os.getcwd())
 os.chdir('baseline_models/')
@@ -126,11 +126,19 @@ def bart_predict(input, model, skip_special_tokens=True, **kwargs):
 
 def generate_prompt(exprompt, i, observation, action=None):
     if i:
-      exprompt += f' {action}\nObservation: {observation}\n\nAction:'
-      prompt = exprompt + f' {action}\nObservation: {observation}\n\n<Img><ImageHere></Img>\n\n###Action: '
+      obslist = observation.split('\n')
+      observation = ''
+      for obs in obslist[2:]:
+        if obs != '':
+            observation += obs+'\n'
+      observation = observation.replace('[button] ', '[')
+      observation = observation.replace(' [button_]', ']')
+
+      prompt = exprompt + f' {action}\nObservation: {observation}\n<Img><ImageHere></Img>\n\n###Action: '
+      exprompt += f' {action}\nObservation: {observation}\nAction:'
     else:
+      prompt = exprompt + f'{observation}\n\nGive the following image: <Img>ImageContent</Img>. <Img><ImageHere></Img>\n\n###Action: '
       exprompt += f'{observation}\n\nAction:'
-      prompt = exprompt + f'{observation}\n\n<Img><ImageHere></Img>\n\n###Action: '
     
     return prompt, exprompt
 
@@ -177,7 +185,7 @@ def predict_v(obs, info, model, prompt, idx, softmax=False, rule=False, bart_mod
     text = init_prompt + prompt[-(text_length-len(init_prompt)):]
     print("*" * 10)
     print(text)
-
+    print("*" * 10)
     # LLM hyper-params
     max_new_tokens=300
     num_beams=1
@@ -237,7 +245,7 @@ def episode(model, idx=None, verbose=False, softmax=False, rule=False, bart_mode
     action = None
     for i in range(100):
         prompt, exprompt = generate_prompt(exprompt, i, obs, action)
-        print("new prompt: ", exprompt)
+        print("new prompt: ", prompt)
         if action and action.startswith('think'):
             obs = 'OK.'
         action = predict_v(obs, info, model, prompt, idx, softmax=softmax, rule=rule, bart_model=bart_model)
