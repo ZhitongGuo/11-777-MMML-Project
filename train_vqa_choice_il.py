@@ -47,7 +47,9 @@ from huggingface_hub import Repository
 import wandb
 
 from transformers import XLMRobertaTokenizer
-from vqa import _get_base_config, BEiT3ForVisualQuestionAnswering
+from vqa import _get_large_config, BEiT3ForVisualQuestionAnswering
+
+print(torch.cuda.is_available())
 
 # Local application/library specific imports
 
@@ -285,11 +287,11 @@ def parse_args():
     parser.add_argument(
         "--learning_rate",
         type=float,
-        default=1e-5,
+        default=5e-4,
         help="Initial learning rate (after the potential warmup period) to use.",
     )
     parser.add_argument("--weight_decay", type=float,
-                        default=0.0, help="Weight decay to use.")
+                        default=0.05, help="Weight decay to use.")
     parser.add_argument("--num_train_epochs", type=int, default=10,
                         help="Total number of training epochs to perform.")
     parser.add_argument(
@@ -307,7 +309,7 @@ def parse_args():
     parser.add_argument(
         "--lr_scheduler_type",
         type=SchedulerType,
-        default="linear",
+        default="cosine",
         help="The scheduler type to use.",
         choices=["linear", "cosine", "cosine_with_restarts",
                  "polynomial", "constant", "constant_with_warmup"],
@@ -416,10 +418,12 @@ def main():
 
     print("Using text encoder: {}".format(args.model_name))
 
-    tokenizer = XLMRobertaTokenizer("/home/ubuntu/Tong/WebShop/baseline_models/beit3.spm")
-    model_args = _get_base_config()
+    tokenizer = XLMRobertaTokenizer("beit3.spm")
+    tokenizer.add_tokens(['[button]', '[button_]', '[clicked button]',
+                            '[clicked button_]'], special_tokens=True)
+    model_args = _get_large_config()
     model = BEiT3ForVisualQuestionAnswering(args = model_args, num_classes = 1)
-    model_weights = torch.load("/home/ubuntu/Tong/WebShop/baseline_models/beit3_base_indomain_patch16_224.pth", map_location='cpu')['model']
+    model_weights = torch.load("beit3_large_indomain_patch16_224.pth")['model']
     model.load_state_dict(model_weights, strict = False)
 
     print("Text encoder loaded")
@@ -448,7 +452,7 @@ def main():
             "weight_decay": 0.0,
         },
     ]
-    optimizer = AdamW(optimizer_grouped_parameters, lr=args.learning_rate)
+    optimizer = AdamW(optimizer_grouped_parameters, lr=args.learning_rate, eps=1e-8)
 
     # Scheduler and math around the number of training steps.
     num_update_steps_per_epoch = math.ceil(

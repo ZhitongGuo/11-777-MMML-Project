@@ -52,9 +52,9 @@ class BEiT3Wrapper(nn.Module):
         super().__init__()
         self.args = args
         self.beit3 = BEiT3(args)
+        self.apply(self._init_weights)
         for parameters in self.beit3.parameters():
             parameters.requires_grad = False
-        self.apply(self._init_weights)
 
     def fix_init_weight(self):
         def rescale(param, layer_id):
@@ -106,7 +106,8 @@ class BiAttention(nn.Module):
             context * self.dot_scale,
             memory.permute(0, 2, 1).contiguous())
         att = input_dot + memory_dot + cross_dot
-        att = att - 1e30 * (1 - mask[:, None])
+        if mask is not None:
+            att = att - 1e30 * (1 - mask[:, None])
 
         weight_one = F.softmax(att, dim=-1)
         output_one = torch.bmm(weight_one, memory)
@@ -145,15 +146,16 @@ class BEiT3ForVisualQuestionAnswering(BEiT3Wrapper):
         embed_dim = args.encoder_embed_dim
         self.attn = BiAttention(embed_dim, 0.0)
         self.head = nn.Sequential(
-            nn.Linear(embed_dim * 4, embed_dim * 2), 
-            norm_layer(embed_dim * 2), 
-            nn.GELU()
+            nn.Linear(embed_dim * 4, embed_dim * 2),
+            nn.ReLU()
         )
         self.head.apply(self._init_weights)
         self.linear = nn.Linear(embed_dim * 2, num_classes)
 
     def forward(self, state_input_ids, state_attention_mask, action_input_ids, action_attention_mask, sizes, images=None, labels=None):
         sizes = sizes.tolist()
+        action_input_ids = F.pad(action_input_ids, (0, 128 - action_input_ids.shape[-1]), value = 1)
+        action_attention_mask = F.pad(action_attention_mask, (0, 128 - action_attention_mask.shape[-1]), value = 0)
         state_outputs = self.beit3(
             textual_tokens=state_input_ids, 
             visual_tokens=images, 
@@ -164,11 +166,11 @@ class BEiT3ForVisualQuestionAnswering(BEiT3Wrapper):
             visual_tokens=None, 
             text_padding_position=action_attention_mask, 
         )
-        state_rep = state_outputs["encoder_out"]
+        state_rep = state_outputs["encoder_embedding"]
         state_mask = state_outputs['encoder_padding_mask']
         state_rep = torch.cat([state_rep[i:i+1].repeat(j, 1, 1) for i, j in enumerate(sizes)], dim=0)
         state_mask = torch.cat([state_mask[i:i+1].repeat(j, 1) for i, j in enumerate(sizes)], dim=0)
-        cls_rep = self.attn(action_outputs['encoder_out'], state_rep, state_mask)
+        cls_rep = self.attn(action_outputs['encoder_embedding'], state_rep, None)
         ln = self.head(cls_rep)
         act_values = get_aggregated(ln, action_attention_mask.sum(1).tolist(), 'mean')
         act_values = self.linear(act_values).squeeze(1)
