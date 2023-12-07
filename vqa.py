@@ -11,6 +11,18 @@ from transformers.modeling_outputs import SequenceClassifierOutput
 def trunc_normal_(tensor, mean=0., std=1.):
     __call_trunc_normal_(tensor, mean=mean, std=std, a=-std, b=std)
     
+def _get_large_config(
+        img_size=224, patch_size=16, drop_path_rate=0, 
+        checkpoint_activations=None, mlp_ratio=4, vocab_size=64010, **kwargs
+):
+    return EncoderConfig(
+        img_size=img_size, patch_size=patch_size, vocab_size=vocab_size, multiway=True, 
+        layernorm_embedding=False, normalize_output=True, no_output_layer=True, 
+        drop_path_rate=drop_path_rate, encoder_embed_dim=1024, encoder_attention_heads=16, 
+        encoder_ffn_embed_dim=int(1024 * mlp_ratio), encoder_layers=24, 
+        checkpoint_activations=checkpoint_activations, 
+    )
+
 def _get_base_config(
         img_size=224, patch_size=16, drop_path_rate=0, 
         checkpoint_activations=None, mlp_ratio=4, vocab_size=64010, **kwargs
@@ -22,6 +34,18 @@ def _get_base_config(
         encoder_ffn_embed_dim=int(768 * mlp_ratio), encoder_layers=12, 
         checkpoint_activations=checkpoint_activations, 
     )
+    
+def get_aggregated(output, lens, method):
+    """
+    Get the aggregated hidden state of the encoder.
+    B x D
+    """
+    if method == 'mean':
+        return torch.stack([output[i, :j, :].mean(0) for i, j in enumerate(lens)], dim=0)
+    elif method == 'last':
+        return torch.stack([output[i, j-1, :] for i, j in enumerate(lens)], dim=0)
+    elif method == 'first':
+        return output[:, 0, :]
     
 class BEiT3Wrapper(nn.Module):
     def __init__(self, args, **kwargs):
@@ -56,28 +80,43 @@ class BEiT3Wrapper(nn.Module):
             nn.init.constant_(m.bias, 0)
             nn.init.constant_(m.weight, 1.0)
 
-class TwoLayerMLP(nn.Module):
-    def __init__(
-            self, 
-            in_features, 
-            hidden_features, 
-            out_features, 
-            norm_layer, 
-            norm_input=True, 
-    ):
+class BiAttention(nn.Module):
+    def __init__(self, input_size, dropout):
         super().__init__()
-        self.norm1 = norm_layer(in_features) if norm_input else nn.Identity()
-        self.dense1 = nn.Linear(in_features, hidden_features)
-        self.norm2 = norm_layer(hidden_features)
-        self.act = nn.GELU()
-        self.dense2 = nn.Linear(hidden_features, out_features)
+        self.dropout = nn.Dropout(dropout)
+        self.input_linear = nn.Linear(input_size, 1, bias=False)
+        self.memory_linear = nn.Linear(input_size, 1, bias=False)
+        self.dot_scale = nn.Parameter(
+            torch.zeros(size=(input_size,)).uniform_(1. / (input_size ** 0.5)),
+            requires_grad=True)
+        self.init_parameters()
 
-    def forward(self, x):
-        x = self.norm1(x)
-        x = self.dense1(x)
-        x = self.norm2(x)
-        x = self.act(x)
-        return self.dense2(x)
+    def init_parameters(self):
+        return
+
+    def forward(self, context, memory, mask):
+        bsz, input_len = context.size(0), context.size(1)
+        memory_len = memory.size(1)
+        context = self.dropout(context)
+        memory = self.dropout(memory)
+
+        input_dot = self.input_linear(context)
+        memory_dot = self.memory_linear(memory).view(bsz, 1, memory_len)
+        cross_dot = torch.bmm(
+            context * self.dot_scale,
+            memory.permute(0, 2, 1).contiguous())
+        att = input_dot + memory_dot + cross_dot
+        att = att - 1e30 * (1 - mask[:, None])
+
+        weight_one = F.softmax(att, dim=-1)
+        output_one = torch.bmm(weight_one, memory)
+        weight_two = (F.softmax(att.max(dim=-1)[0], dim=-1)
+                      .view(bsz, 1, input_len))
+        output_two = torch.bmm(weight_two, context)
+        return torch.cat(
+            [context, output_one, context * output_one,
+             output_two * output_one],
+            dim=-1)
 
 
 class Pooler(nn.Module):
@@ -104,36 +143,36 @@ class BEiT3ForVisualQuestionAnswering(BEiT3Wrapper):
     ):
         super(BEiT3ForVisualQuestionAnswering, self).__init__(args=args)
         embed_dim = args.encoder_embed_dim
-        self.pooler = Pooler(
-            input_features=embed_dim, 
-            output_features=embed_dim, 
-            norm_layer=norm_layer, 
-        )
-        self.pooler.apply(self._init_weights)
+        self.attn = BiAttention(embed_dim, 0.0)
         self.head = nn.Sequential(
-            nn.Linear(embed_dim, embed_dim * 2), 
+            nn.Linear(embed_dim * 4, embed_dim * 2), 
             norm_layer(embed_dim * 2), 
-            nn.GELU(), 
-            nn.Linear(embed_dim * 2, num_classes), 
+            nn.GELU()
         )
         self.head.apply(self._init_weights)
+        self.linear = nn.Linear(embed_dim * 2, num_classes)
 
     def forward(self, state_input_ids, state_attention_mask, action_input_ids, action_attention_mask, sizes, images=None, labels=None):
         sizes = sizes.tolist()
-        state_input_ids = torch.cat([state_input_ids[i:i+1].repeat(j, 1) for i, j in enumerate(sizes)], dim=0)
-        state_attention_mask = torch.cat([state_attention_mask[i:i+1].repeat(j, 1) for i, j in enumerate(sizes)], dim=0)
-        text_input_ids = torch.cat([action_input_ids, state_input_ids], dim = 1)
-        text_attention_mask = torch.cat([action_attention_mask, state_attention_mask], dim = 1)
-        images = torch.cat([images[i:i+1].repeat(j, 1, 1, 1) for i, j in enumerate(sizes)], dim = 0)
-        outputs = self.beit3(
-            textual_tokens=text_input_ids, 
+        state_outputs = self.beit3(
+            textual_tokens=state_input_ids, 
             visual_tokens=images, 
-            text_padding_position=text_attention_mask, 
+            text_padding_position=state_attention_mask, 
         )
-        x = outputs["encoder_out"]
-        cls_rep = self.pooler(x)
-        ln = self.head(cls_rep).squeeze(1)
-        logits = [F.log_softmax(_, dim=0) for _ in ln.split(sizes)]
+        action_outputs = self.beit3(
+            textual_tokens=action_input_ids, 
+            visual_tokens=None, 
+            text_padding_position=action_attention_mask, 
+        )
+        state_rep = state_outputs["encoder_out"]
+        state_mask = state_outputs['encoder_padding_mask']
+        state_rep = torch.cat([state_rep[i:i+1].repeat(j, 1, 1) for i, j in enumerate(sizes)], dim=0)
+        state_mask = torch.cat([state_mask[i:i+1].repeat(j, 1) for i, j in enumerate(sizes)], dim=0)
+        cls_rep = self.attn(action_outputs['encoder_out'], state_rep, state_mask)
+        ln = self.head(cls_rep)
+        act_values = get_aggregated(ln, action_attention_mask.sum(1).tolist(), 'mean')
+        act_values = self.linear(act_values).squeeze(1)
+        logits = [F.log_softmax(_, dim=0) for _ in act_values.split(sizes)]
         loss = None
         if labels is not None:
             loss = -sum(
