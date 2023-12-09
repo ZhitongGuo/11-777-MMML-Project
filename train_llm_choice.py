@@ -334,53 +334,38 @@ def parse_args():
 
     return args
 
-examples = """Webshop
-Instruction:
-i would like a 3 ounce bottle of bright citrus deodorant for sensitive skin, and price lower than 50.00 dollars
-[Search]
+examples = """Instruction:
+i am looking for an easy to install white antler chandelier with 18 antlers and 9 lights, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 50)
+durahonn white antler chandelier, retro resin deer horn pendant light, e12 lamp holder, commercial and home lighting for cafes, bars, restaurants, living rooms (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights, bigmaii cabin retro faux antler light fixture rustic resin pendant light farmhouse candle style for living room, brown
+$100.0
+hubrin rustic antler chandelier, resin deer horn pendant light , antler light fixtures 9 light brown e12 candle style for home store (9 lamp arms + 6arms)
+$378.99
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier, retro resin deer horn pendant light, e12 lamp holder, commercial and home lighting for cafes, bars, restaurants, living rooms (15 antlers + 9 lights)]    click[item - durahonn antler chandelier, 9 lights e12 bulbs, brown resin deer horn chandelier, retro antler pendant light for kitchen, bar, living room, dining room (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights, bigmaii cabin retro faux antler light fixture rustic resin pendant light farmhouse candle style for living room, brown]    
 
-Action: search[3 ounce bright citrus deodorant sensitive skin]
-Observation:
-[Back to Search]
-Page 1 (Total results: 50)
-[Next >]
-[B078GWRC1J]
-Bright Citrus Deodorant by Earth Mama | Natural and Safe for Sensitive Skin, Pregnancy and Breastfeeding, Contains Organic Calendula 3-Ounce
-$10.99
-[B078GTKVXY]
-Ginger Fresh Deodorant by Earth Mama | Natural and Safe for Sensitive Skin, Pregnancy and Breastfeeding, Contains Organic Calendula 3-Ounce
-$10.99
-[B08KBVJ4XN]
-Barrel and Oak - Aluminum-Free Deodorant, Deodorant for Men, Essential Oil-Based Scent, 24-Hour Odor Protection, Cedar & Patchouli Blend, Gentle on Sensitive Skin (Mountain Sage, 2.7 oz, 2-Pack)
-$15.95
+Think:durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier, retro resin deer horn pendant light, e12 lamp holder, commercial and home lighting for cafes, bars, restaurants, living rooms (15 antlers + 9 lights)]
 
-Action: think[B078GWRC1J and B078GTKVXY are bright citrus deodorant less then 50 dollars. I can check B078GWRC1J first.]
-Observation: OK.
+Observation: 
+size
+durahonn white antler chandelier, retro resin deer horn pendant light, e12 lamp holder, commercial and home lighting for cafes, bars, restaurants, living rooms (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
 
-Action: click[B078GWRC1J]
-Observation:
-[Back to Search]
-[< Prev]
-scent [assorted scents][bright citrus][calming lavender][ginger fresh][simply non-scents]
-size [travel set (4-pack)][3 ounce (pack of 1)][3-ounce (2-pack)]
-Bright Citrus Deodorant by Earth Mama | Natural and Safe for Sensitive Skin, Pregnancy and Breastfeeding, Contains Organic Calendula 3-Ounce
-Price: $10.99
-Rating: N.A.
-[Description]
-[Features]
-[Reviews]
-[Buy Now]
+Think:For durahonn white antler chandelier, the item has options '18 antlers + 9 lights' and seems good to buy.
+Action:click[18 antlers + 9 lights]
 
-Action: think[For 3 ounce bottle of bright citrus deodorant for sensitive skin, the item has options 'bright citrus' and '3 ounce (pack of 1)' and seems good to buy.]
-Observation: OK.
-
-Action: click[bright citrus]
-Observation: You have clicked bright citrus.
-
-Action: click[3 ounce (pack of 1)]
 Observation: You have clicked 3 ounce (pack of 1).
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
 
 Action: click[Buy Now]
+
 """
 
 def generate_prompt(observation, action=None):
@@ -406,7 +391,7 @@ def generate_prompt(observation, action=None):
     # observation = observation.replace(' [button_]', ']')
     observation = observation.replace("instruction", "Instruction")
     print("新的开始"+"="*20)
-    print(observation)
+    # print(observation)
 
     observation += "Product image: <ImageHere>\n"
     observation += "Available actions: "
@@ -414,10 +399,9 @@ def generate_prompt(observation, action=None):
         observation += i
         observation += "    "
     
-    print("分割线"+"="*20)
-    print(observation)
-    examples = ''
-    prompt = examples + f'{observation}\n\nAction: '
+    # print("分割线"+"="*20)
+    # print(observation)
+    prompt = examples + f'{observation}\n\nFollowing the above format, output the Action you will take to complete the instructed task. Action:'
     return prompt
 
 
@@ -558,73 +542,15 @@ def main():
         if args.with_tracking:
             total_loss = total_step = 0
 
-        # random.shuffle(train_idx)
-        # bar = tqdm(total=len(train_idx))
-        # step = 0
-        # avg_train_loss = 0.0
-
-        # for i in train_idx:
-        #     data = train_dataset[i]
-        #     states = data['states']
-        #     actions = data['actions']
-        #     sizes = data['sizes']
-        #     raw_images = data['raw_images'].upper()
-        #     labels = data['labels']
-        #     if raw_images == "NONE":
-        #         image = Image.new('RGB', (224, 224), (255, 255, 255))
-        #     else:
-        #         try:
-        #             image = Image.open(os.path.join(IMAGE_PATH, raw_images + ".jpg")).convert('RGB')
-        #         except:
-        #             image = Image.new('RGB', (224, 224), (255, 255, 255)) # this is rare
-        #     image = train_processor(image).unsqueeze(0).to('cuda:{}'.format(0))
-
-        #     if len(states.split("[button]")) > 6:
-        #         states = "[button]".join(states.split("[button]")[:8])
-            
-        #     temp_states = []
-        #     for i, s in enumerate(states.split("[button]")):
-        #         words = s.split(" ")
-        #         if i > 0 and len(words) > 12:
-        #             temp_states.append(" ".join(words[:12]))
-        #         else:
-        #             temp_states.append(s)
-        #     states = "[button]".join(temp_states)
-
-        #     obs = states# + "\n Available actions: " + ", ".join(truncate_actions(actions))
-        #     prompt = generate_prompt(obs)
-        #     tokenized_labels = llama_tokenizer(
-        #         actions[labels],
-        #         truncation=True,
-        #         max_length=32,
-        #         padding=False,
-        #         return_tensors='pt',
-        #     )['input_ids']
-            
-        #     loss = model(prompt, [image], labels=tokenized_labels) / args.gradient_accumulation_steps
-        #     loss.backward()
-        #     if step % args.gradient_accumulation_steps == 0 or step == len(train_idx) - 1:
-        #         optimizer.step()
-        #         optimizer.zero_grad()
-        #     avg_train_loss += loss.item()
-        #     bar.update(1)
-        # bar.close()
-
-        random.shuffle(eval_idx)
-        bar = tqdm(total=len(eval_idx))
+        random.shuffle(train_idx)
+        bar = tqdm(total=len(train_idx))
         step = 0
         avg_train_loss = 0.0
 
-        '''for i in eval_idx:
-            data = eval_dataset[i]'''
         for i in train_idx:
             data = train_dataset[i]
             states = data['states']
-            # print("新的开始"+"="*20)
-            # print(states)
-            # print("分割线"+"="*20)
             actions = data['actions']
-            # print(actions)
             sizes = data['sizes']
             raw_images = data['raw_images'].upper()
             labels = data['labels']
@@ -635,7 +561,7 @@ def main():
                     image = Image.open(os.path.join(IMAGE_PATH, raw_images + ".jpg")).convert('RGB')
                 except:
                     image = Image.new('RGB', (224, 224), (255, 255, 255)) # this is rare
-            image = eval_processor(image).unsqueeze(0).to('cuda:{}'.format(0))
+            image = train_processor(image).unsqueeze(0).to('cuda:{}'.format(0))
 
             '''if len(states.split("[button]")) > 6:
                 states = "[button]".join(states.split("[button]")[:8])
@@ -651,10 +577,6 @@ def main():
 
             obs = states# + "\n Available actions: " + ", ".join(truncate_actions(actions))'''
             prompt = generate_prompt(states, actions)
-            print("=============================================================================================================")
-            print("PROMPT: ", prompt)
-            print("GROUND TRUTH:", actions[labels])
-            continue
             tokenized_labels = llama_tokenizer(
                 actions[labels],
                 truncation=True,
@@ -662,9 +584,87 @@ def main():
                 padding=False,
                 return_tensors='pt',
             )['input_ids']
-            answer = model.generate(prompt, [image])
-            print("ANSWER: ", answer)
+
+            import gc
+            gc.collect()
+            print("BEfore forward")
+            GPUtil.showUtilization()
+
+            loss = model(prompt, [image], labels=tokenized_labels) / args.gradient_accumulation_steps
+            print("zha le ma???????????????????????????????????????????????????????")
+            
+            import gc
+            gc.collect()
+            print("After forward")
+            GPUtil.showUtilization()
+
+            loss.backward()
+            gc.collect()
+            print("After backward")
+            GPUtil.showUtilization()
+
+            if step % args.gradient_accumulation_steps == 0 or step == len(train_idx) - 1:
+                optimizer.step()
+                optimizer.zero_grad()
+            avg_train_loss += loss.item()
             bar.update(1)
+        bar.close()
+
+        random.shuffle(eval_idx)
+        bar = tqdm(total=len(eval_idx))
+        step = 0
+        avg_train_loss = 0.0
+        model.eval()
+        with torch.no_grad():
+
+            for i in eval_idx:
+                torch.cuda.empty_cache()
+                data = eval_dataset[i]
+                states = data['states']
+                # print("新的开始"+"="*20)
+                # print(states)
+                # print("分割线"+"="*20)
+                actions = data['actions']
+                # print(actions)
+                sizes = data['sizes']
+                raw_images = data['raw_images'].upper()
+                labels = data['labels']
+                if raw_images == "NONE":
+                    image = Image.new('RGB', (224, 224), (255, 255, 255))
+                else:
+                    try:
+                        image = Image.open(os.path.join(IMAGE_PATH, raw_images + ".jpg")).convert('RGB')
+                    except:
+                        image = Image.new('RGB', (224, 224), (255, 255, 255)) # this is rare
+                image = eval_processor(image).unsqueeze(0).to('cuda:{}'.format(0))
+
+                '''if len(states.split("[button]")) > 6:
+                    states = "[button]".join(states.split("[button]")[:8])
+                
+                temp_states = []
+                for i, s in enumerate(states.split("[button]")):
+                    words = s.split(" ")
+                    if i > 0 and len(words) > 12:
+                        temp_states.append(" ".join(words[:12]))
+                    else:
+                        temp_states.append(s)
+                states = "[button]".join(temp_states)
+
+                obs = states# + "\n Available actions: " + ", ".join(truncate_actions(actions))'''
+                prompt = generate_prompt(states, actions)
+                print("=============================================================================================================")
+                # print("PROMPT: ", prompt)
+                print("GROUND TRUTH:", actions[labels])
+                tokenized_labels = llama_tokenizer(
+                    actions[labels],
+                    truncation=True,
+                    max_length=32,
+                    padding=False,
+                    return_tensors='pt',
+                )['input_ids']
+                answer = model.generate(prompt, [image])
+                print("ANSWER: ", answer)
+                bar.update(1)
         bar.close()
 
         # if args.checkpointing_steps == "epoch":
