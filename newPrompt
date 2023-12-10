@@ -1,0 +1,49 @@
+
+examples = """Instruction:
+i am looking for an easy to install white antler chandelier with 18 antlers and 9 lights, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 50)
+durahonn white antler chandelier, retro resin deer horn pendant light, e12 lamp holder, commercial and home lighting for cafes, bars, restaurants, living rooms (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights, bigmaii cabin retro faux antler light fixture rustic resin pendant light farmhouse candle style for living room, brown
+$100.0
+hubrin rustic antler chandelier, resin deer horn pendant light , antler light fixtures 9 light brown e12 candle style for home store (9 lamp arms + 6arms)
+$378.99
+Product image:
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier, retro resin deer horn pendant light, e12 lamp holder, commercial and home lighting for cafes, bars, restaurants, living rooms (15 antlers + 9 lights)]    click[item - durahonn antler chandelier, 9 lights e12 bulbs, brown resin deer horn chandelier, retro antler pendant light for kitchen, bar, living room, dining room (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights, bigmaii cabin retro faux antler light fixture rustic resin pendant light farmhouse candle style for living room, brown]    
+
+Think:durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier, retro resin deer horn pendant light, e12 lamp holder, commercial and home lighting for cafes, bars, restaurants, living rooms (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier, retro resin deer horn pendant light, e12 lamp holder, commercial and home lighting for cafes, bars, restaurants, living rooms (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think:For durahonn white antler chandelier, the item has options '18 antlers + 9 lights' and seems good to buy.
+Action:click[18 antlers + 9 lights]
+
+Observation: You have clicked 3 ounce (pack of 1).
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+"""
+
+oneShot = examples + """
+Instruction:
+i would like a womens xl dark heather cotton tank top thats machine washable, and price lower than 50.00 dollars
+Observation: 
+fit type
+color
+size
+fun redneck flirting gift tshirt your trailer or mine tank top
+price: $19.99
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[women]    click[small]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+"""
