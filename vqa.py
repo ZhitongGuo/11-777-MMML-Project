@@ -53,8 +53,8 @@ class BEiT3Wrapper(nn.Module):
         self.args = args
         self.beit3 = BEiT3(args)
         self.apply(self._init_weights)
-        for parameters in self.beit3.parameters():
-            parameters.requires_grad = False
+        #for _, parameters in self.beit3.named_parameters():
+            #parameters.requires_grad = False
 
     def fix_init_weight(self):
         def rescale(param, layer_id):
@@ -128,7 +128,7 @@ class Pooler(nn.Module):
         self.activation = nn.Tanh()
 
     def forward(self, x):
-        cls_rep = x[:, 0, :]
+        cls_rep = x
         cls_rep = self.norm(cls_rep)
         pooled_output = self.dense(cls_rep)
         pooled_output = self.activation(pooled_output)
@@ -144,10 +144,21 @@ class BEiT3ForVisualQuestionAnswering(BEiT3Wrapper):
     ):
         super(BEiT3ForVisualQuestionAnswering, self).__init__(args=args)
         embed_dim = args.encoder_embed_dim
+        self.pooler = Pooler(
+            input_features=embed_dim, 
+            output_features=embed_dim, 
+            norm_layer=norm_layer, 
+        )
+        self.pooler2 = Pooler(
+            input_features=embed_dim, 
+            output_features=embed_dim, 
+            norm_layer=norm_layer, 
+        )
         self.attn = BiAttention(embed_dim, 0.0)
         self.head = nn.Sequential(
             nn.Linear(embed_dim * 4, embed_dim * 2),
-            nn.ReLU()
+            norm_layer(embed_dim * 2),
+            nn.GELU()
         )
         self.head.apply(self._init_weights)
         self.linear = nn.Linear(embed_dim * 2, num_classes)
@@ -167,10 +178,12 @@ class BEiT3ForVisualQuestionAnswering(BEiT3Wrapper):
             text_padding_position=action_attention_mask, 
         )
         state_rep = state_outputs["encoder_embedding"]
+        state_rep = self.pooler(state_rep)
         state_mask = state_outputs['encoder_padding_mask']
         state_rep = torch.cat([state_rep[i:i+1].repeat(j, 1, 1) for i, j in enumerate(sizes)], dim=0)
         state_mask = torch.cat([state_mask[i:i+1].repeat(j, 1) for i, j in enumerate(sizes)], dim=0)
-        cls_rep = self.attn(action_outputs['encoder_embedding'], state_rep, None)
+        action_rep = self.pooler2(action_outputs['encoder_embedding'])
+        cls_rep = self.attn(action_rep, state_rep, state_mask)
         ln = self.head(cls_rep)
         act_values = get_aggregated(ln, action_attention_mask.sum(1).tolist(), 'mean')
         act_values = self.linear(act_values).squeeze(1)

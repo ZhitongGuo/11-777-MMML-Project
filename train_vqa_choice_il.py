@@ -47,7 +47,7 @@ from huggingface_hub import Repository
 import wandb
 
 from transformers import XLMRobertaTokenizer
-from vqa import _get_large_config, BEiT3ForVisualQuestionAnswering
+from vqa import _get_large_config, BEiT3ForVisualQuestionAnswering, _get_base_config
 
 print(torch.cuda.is_available())
 
@@ -287,7 +287,7 @@ def parse_args():
     parser.add_argument(
         "--learning_rate",
         type=float,
-        default=5e-4,
+        default=5e-6,
         help="Initial learning rate (after the potential warmup period) to use.",
     )
     parser.add_argument("--weight_decay", type=float,
@@ -309,7 +309,7 @@ def parse_args():
     parser.add_argument(
         "--lr_scheduler_type",
         type=SchedulerType,
-        default="cosine",
+        default="linear",
         help="The scheduler type to use.",
         choices=["linear", "cosine", "cosine_with_restarts",
                  "polynomial", "constant", "constant_with_warmup"],
@@ -545,7 +545,6 @@ def main():
         model.train()
         if args.with_tracking:
             total_loss = total_step = 0
-
         for step, batch in enumerate(train_dataloader):
             state_input_ids = batch['state_input_ids']
             state_attention_mask = batch['state_attention_mask']
@@ -610,6 +609,8 @@ def main():
 
             if completed_steps >= args.max_train_steps:
                 break
+        train_metric = metric.compute()
+        logger.info(f"epoch {epoch}: {train_metric}")
 
         model.eval()
         samples_seen = 0
