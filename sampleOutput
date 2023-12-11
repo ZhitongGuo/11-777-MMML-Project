@@ -1,0 +1,1658 @@
+Instruction:
+i need gluten free and low sodium seasoning which is all-purpose. make sure they are organic seasonings, and price lower than 30.00 dollars
+Observation: 
+page 1 (total_results: 2)
+organic coconut aminos soy sauce replacement, 16.9 ounces
+$10.28
+mospices & seasonings - seasoned sea salt, low sodium, all
+$7.99
+Product image: <ImageHere>
+Available actions: click[back to search]    click[next >]    click[item - organic coconut aminos soy sauce replacement, 16.9 ounces]    click[item - mospices & seasonings - seasoned sea salt, low sodium, all purpose - 8 oz. bottle]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[next >]
+ANSWER:  1. click[back to search
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:███████████████████████████████████████████████▏                                                                                                                                                                             | 89/338 [01:07<03:09,  1.32it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+i need gluten free and low sodium seasoning which is all-purpose. make sure they are organic seasonings, and price lower than 30.00 dollars
+Observation: 
+page 2 (total_results: 2)
+#1 best-selling 4oz. flavor god seasonings - gluten free, low
+$11.0
+element, rice cake, og2, drk choclat, pack of 6, size
+$25.35
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[item - #1 best-selling 4oz. flavor god seasonings - gluten free, low sodium, paleo, vegan, no msg (single seasoning) (cheese, 1 bottle)]    click[item - element, rice cake, og2, drk choclat, pack of 6, size 3.5 oz, (low carb gluten free gmo free kosher low sodium vegan wheat free yeast free 95%+ organic)]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[item - #1 best-selling 4oz. flavor god seasonings - gluten free, low sodium, paleo, vegan, no msg (single seasoning) (cheese, 1 bottle)]
+ANSWER:  Observation: 
+page
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:███████████████████████████████████████████████▊                                                                                                                                                                             | 90/338 [01:08<03:09,  1.31it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+i need gluten free and low sodium seasoning which is all-purpose. make sure they are organic seasonings, and price lower than 30.00 dollars
+Observation: 
+#1 best-selling 4oz. flavor god seasonings - gluten free, low sodium, paleo, vegan, no msg (single seasoning) (cheese, 1 bottle)
+price: $11.0
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[features]    click[buy now]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[buy now]
+ANSWER:  click[buy now]
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:████████████████████████████████████████████████▌                                                                                                                                                                            | 91/338 [01:09<03:03,  1.34it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im hoping to find non-toxic false teeth that are made out of high quality soft silicone, and price lower than 40.00 dollars
+Observation: 
+page 1 (total_results: 2)
+velaurs fangs, soft silicone false teeth vivid retractable for parties
+$6.03
+rosenice denture box case denture bath box case dental false
+$6.79
+Product image: <ImageHere>
+Available actions: click[back to search]    click[next >]    click[item - velaurs fangs, soft silicone false teeth vivid retractable for parties for halloween party for mandibular teeth for lay pops]    click[item - rosenice denture box case denture bath box case dental false teeth storage box (blue)]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[item - velaurs fangs, soft silicone false teeth vivid retractable for parties for halloween party for mandibular teeth for lay pops]
+ANSWER:  Instruction:
+i am looking
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:█████████████████████████████████████████████████▏                                                                                                                                                                           | 92/338 [01:09<03:06,  1.32it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im hoping to find non-toxic false teeth that are made out of high quality soft silicone, and price lower than 40.00 dollars
+Observation: 
+velaurs fangs, soft silicone false teeth vivid retractable for parties for halloween party for mandibular teeth for lay pops
+price: $6.03
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[features]    click[reviews]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[features]
+ANSWER:  click[features]
+
+Ob
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:█████████████████████████████████████████████████▉                                                                                                                                                                           | 93/338 [01:10<03:01,  1.35it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im hoping to find non-toxic false teeth that are made out of high quality soft silicone, and price lower than 40.00 dollars
+Observation: 
+ using high‑quality soft silicone material, which is safe, non‑toxic and no odors. 
+ easy to wear and use, which is the perfect match for home halloween party. 
+ suitable for use as a vampire, werewolf, zombie and cosplay costume accessory. 
+ match with your halloween cosplay, which can make your appearance more horrible and scary. 
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[< prev]
+ANSWER:  
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:██████████████████████████████████████████████████▋                                                                                                                                                                          | 94/338 [01:11<03:02,  1.34it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im hoping to find non-toxic false teeth that are made out of high quality soft silicone, and price lower than 40.00 dollars
+Observation: 
+velaurs fangs, soft silicone false teeth vivid retractable for parties for halloween party for mandibular teeth for lay pops
+price: $6.03
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[reviews]    click[buy now]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[buy now]
+ANSWER:  Observation: 
+page
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:███████████████████████████████████████████████████▎                                                                                                                                                                         | 95/338 [01:12<02:59,  1.35it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im looking for a bath brush in beige with a long handle, and price lower than 40.00 dollars
+Observation: 
+page 1 (total_results: 2)
+prozklves back scrubber for shower, long handle back loofah shower
+$13.94
+prozklves back scrubber for shower, long handle back loofah shower
+$7.99
+Product image: <ImageHere>
+Available actions: click[back to search]    click[next >]    click[item - prozklves back scrubber for shower, long handle back loofah shower brush, soft nylon mesh back cleaner washer, bath brush for women men, exfoliating body scrubber for elderly (2 pcs=green+beige)]    click[item - prozklves back scrubber for shower, long handle back loofah shower brush, soft nylon mesh back cleaner washer, bath brush for women men, exfoliating body scrubber for elderly (light pink)]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[item - prozklves back scrubber for shower, long handle back loofah shower brush, soft nylon mesh back cleaner washer, bath brush for women men, exfoliating body scrubber for elderly (2 pcs=green+beige)]
+ANSWER:  Observation: 
+page
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:████████████████████████████████████████████████████                                                                                                                                                                         | 96/338 [01:12<03:00,  1.34it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im looking for a bath brush in beige with a long handle, and price lower than 40.00 dollars
+Observation: 
+scent
+prozklves back scrubber for shower, long handle back loofah shower brush, soft nylon mesh back cleaner washer, bath brush for women men, exfoliating body scrubber for elderly (2 pcs=green+beige)
+price: $13.94
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[description]    click[2 pack-beige]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[2 pack-beige]
+ANSWER:  click[2 pack-beige]
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:████████████████████████████████████████████████████▋                                                                                                                                                                        | 97/338 [01:13<02:59,  1.34it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+you have clicked 2 pack-beige.
+Instruction:
+im looking for a bath brush in beige with a long handle, and price lower than 40.00 dollars
+Observation: 
+scent
+prozklves back scrubber for shower, long handle back loofah shower brush, soft nylon mesh back cleaner washer, bath brush for women men, exfoliating body scrubber for elderly (2 pcs=green+beige)
+price: $13.94
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[buy now]    click[green]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[buy now]
+ANSWER:  click[buy now]
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:█████████████████████████████████████████████████████▍                                                                                                                                                                       | 98/338 [01:14<03:01,  1.32it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+looking for high gloss storage space tv stand with led lights also choose colour black brown, and price lower than 180.00 dollars
+Observation: 
+page 1 (total_results: 2)
+mecor modern led black tv stand,12 colors led tv stand
+$100.0
+meble furniture & rugs eva 77 modern high gloss tv
+$599.0
+Product image: <ImageHere>
+Available actions: click[back to search]    click[next >]    click[item - mecor modern led black tv stand,12 colors led tv stand with remote control lights,high gloss tv cabinet with storage&2 drawers,65 inch entertainment center for living room]    click[item - meble furniture & rugs eva 77 modern high gloss tv stand with 16 color leds (dark gray)]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[item - mecor modern led black tv stand,12 colors led tv stand with remote control lights,high gloss tv cabinet with storage&2 drawers,65 inch entertainment center for living room]
+ANSWER:  
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:██████████████████████████████████████████████████████                                                                                                                                                                       | 99/338 [01:15<03:00,  1.33it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+you have clicked black.
+Instruction:
+looking for high gloss storage space tv stand with led lights also choose colour black brown, and price lower than 180.00 dollars
+Observation: 
+color
+mecor modern led black tv stand,12 colors led tv stand with remote control lights,high gloss tv cabinet with storage&2 drawers,65 inch entertainment center for living room
+price: $100.0
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[black]    click[white]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[black]
+ANSWER:  click[black]
+
+Observ
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:██████████████████████████████████████████████████████▌                                                                                                                                                                     | 100/338 [01:15<02:56,  1.35it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+you have clicked black.
+Instruction:
+looking for high gloss storage space tv stand with led lights also choose colour black brown, and price lower than 180.00 dollars
+Observation: 
+color
+mecor modern led black tv stand,12 colors led tv stand with remote control lights,high gloss tv cabinet with storage&2 drawers,65 inch entertainment center for living room
+price: $100.0
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[buy now]
+ANSWER:  click[buy now]
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:███████████████████████████████████████████████████████▏                                                                                                                                                                    | 101/338 [01:16<02:53,  1.37it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im looking for a 19 neck 38 sleeve classic fit dress shirts for men, and price lower than 50.00 dollars
+Observation: 
+page 1 (total_results: 2)
+buttoned down mens classic fit french cuff dress shirt, supima
+$43.8 to $52.0
+stacy adams mens contemporary modern fit dress shirt
+$17.55 to $50.03
+Product image: <ImageHere>
+Available actions: click[back to search]    click[next >]    click[item - buttoned down mens classic fit french cuff dress shirt, supima cotton non-iron, spread collar]    click[item - stacy adams mens contemporary modern fit dress shirt]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[item - buttoned down mens classic fit french cuff dress shirt, supima cotton non-iron, spread collar]
+ANSWER:  
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:███████████████████████████████████████████████████████▉                                                                                                                                                                    | 102/338 [01:17<02:50,  1.38it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im looking for a 19 neck 38 sleeve classic fit dress shirts for men, and price lower than 50.00 dollars
+Observation: 
+size
+color
+price: $43.8 to $52.0
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[15.5 neck 35 sleeve]    click[19.5 neck 38 sleeve]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[19.5 neck 38 sleeve]
+ANSWER:  click[19.5 neck
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:████████████████████████████████████████████████████████▌                                                                                                                                                                   | 103/338 [01:18<02:55,  1.34it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im looking for a 19 neck 38 sleeve classic fit dress shirts for men, and price lower than 50.00 dollars
+Observation: 
+size
+color
+price: $43.8 to $52.0
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[17 neck 34 sleeve]    click[19 neck 39 sleeve]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[19 neck 39 sleeve]
+ANSWER:  click[19 neck 39
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:█████████████████████████████████████████████████████████▎                                                                                                                                                                  | 104/338 [01:18<02:53,  1.35it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im looking for a 19 neck 38 sleeve classic fit dress shirts for men, and price lower than 50.00 dollars
+Observation: 
+size
+color
+price: $43.8 to $52.0
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[19.5 neck 38 sleeve]    click[19.5 neck 39 sleeve]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[19.5 neck 38 sleeve]
+ANSWER:  click[19.5 neck
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:██████████████████████████████████████████████████████████                                                                                                                                                                  | 105/338 [01:19<02:48,  1.38it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im looking for a 19 neck 38 sleeve classic fit dress shirts for men, and price lower than 50.00 dollars
+Observation: 
+size
+color
+price: $43.8 to $52.0
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[15.5 neck 36 sleeve]    click[19 neck 39 sleeve]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[19 neck 39 sleeve]
+ANSWER:  click[19 neck 39
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:██████████████████████████████████████████████████████████▋                                                                                                                                                                 | 106/338 [01:20<02:47,  1.38it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im looking for a 19 neck 38 sleeve classic fit dress shirts for men, and price lower than 50.00 dollars
+Observation: 
+size
+color
+price: $43.8 to $52.0
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[14.5 neck 34 sleeve]    click[19.5 neck 38 sleeve]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[< prev]
+ANSWER:  click[19.5 neck
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:███████████████████████████████████████████████████████████▍                                                                                                                                                                | 107/338 [01:20<02:46,  1.39it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im looking for a 19 neck 38 sleeve classic fit dress shirts for men, and price lower than 50.00 dollars
+Observation: 
+page 1 (total_results: 2)
+stacy adams mens big & tall big and tall contemporary
+$33.8 to $47.92
+buttoned down mens classic fit cutaway collar pattern dress shirt
+$9.44 to $60.4
+Product image: <ImageHere>
+Available actions: click[back to search]    click[next >]    click[item - stacy adams mens big & tall big and tall contemporary modern fit dress shirt]    click[item - buttoned down mens classic fit cutaway collar pattern dress shirt]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[item - stacy adams mens big & tall big and tall contemporary modern fit dress shirt]
+ANSWER:  Think: stacy ad
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:████████████████████████████████████████████████████████████                                                                                                                                                                | 108/338 [01:21<02:48,  1.37it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im looking for a 19 neck 38 sleeve classic fit dress shirts for men, and price lower than 50.00 dollars
+Observation: 
+size
+color
+price: $33.8 to $47.92
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[17.5 neck 38-39 sleeve]    click[19 neck 38-39 sleeve]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[19 neck 38-39 sleeve]
+ANSWER:  click[19 neck 38
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:████████████████████████████████████████████████████████████▊                                                                                                                                                               | 109/338 [01:22<02:45,  1.38it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im looking for a 19 neck 38 sleeve classic fit dress shirts for men, and price lower than 50.00 dollars
+Observation: 
+size
+color
+price: $33.8 to $47.92
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[19 neck 34-35 sleeve]    click[20 neck 36-37 sleeve]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[19 neck 34-35 sleeve]
+ANSWER:  click[19 neck 34
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:█████████████████████████████████████████████████████████████▍                                                                                                                                                              | 110/338 [01:23<02:45,  1.37it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im looking for a 19 neck 38 sleeve classic fit dress shirts for men, and price lower than 50.00 dollars
+Observation: 
+size
+color
+price: $33.8 to $47.92
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[16.5 neck 36-37 sleeve]    click[yellow paisley]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[< prev]
+ANSWER:  click[16.5 neck
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:██████████████████████████████████████████████████████████████▏                                                                                                                                                             | 111/338 [01:23<02:44,  1.38it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im looking for a 19 neck 38 sleeve classic fit dress shirts for men, and price lower than 50.00 dollars
+Observation: 
+page 1 (total_results: 2)
+stacy adams mens multi color gingham classic fit dress shirt
+$29.41
+stacy adams mens big-tall 39000 solid dress shirt
+$26.92 to $53.78
+Product image: <ImageHere>
+Available actions: click[back to search]    click[next >]    click[item - stacy adams mens multi color gingham classic fit dress shirt]    click[item - stacy adams mens big-tall 39000 solid dress shirt]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[item - stacy adams mens multi color gingham classic fit dress shirt]
+ANSWER:  Think: stacy ad
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:██████████████████████████████████████████████████████████████▊                                                                                                                                                             | 112/338 [01:24<02:46,  1.36it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im looking for a 19 neck 38 sleeve classic fit dress shirts for men, and price lower than 50.00 dollars
+Observation: 
+size
+stacy adams mens multi color gingham classic fit dress shirt
+price: $29.41
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[19 neck 38-39 sleeve]    click[20 neck 36-37 sleeve]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[19 neck 38-39 sleeve]
+ANSWER:  click[19 neck 38
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:███████████████████████████████████████████████████████████████▌                                                                                                                                                            | 113/338 [01:25<02:47,  1.34it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+im looking for a 19 neck 38 sleeve classic fit dress shirts for men, and price lower than 50.00 dollars
+Observation: 
+size
+stacy adams mens multi color gingham classic fit dress shirt
+price: $29.41
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[buy now]    click[19 neck 36-37 sleeve]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[buy now]
+ANSWER:  click[buy now]
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:████████████████████████████████████████████████████████████████▎                                                                                                                                                           | 114/338 [01:26<02:44,  1.36it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+i am looking for a high power high definition sound bars, and price lower than 160.00 dollars
+Observation: 
+page 1 (total_results: 2)
+sony ht-ct370 2.1 channel 300w sound bar with wireless subwoofer,
+$100.0
+sound bar for tv soundbar with dual built-in subwoofer 15.8
+$37.93
+Product image: <ImageHere>
+Available actions: click[back to search]    click[next >]    click[item - sony ht-ct370 2.1 channel 300w sound bar with wireless subwoofer, bluetooth, and nfc]    click[item - sound bar for tv soundbar with dual built-in subwoofer 15.8 inch 3d surround sound for home theater wired & wireless bluetooth 5.0 audio speaker for pc/phone 3 equalizer modes (s11a) (s11a)]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[item - sony ht-ct370 2.1 channel 300w sound bar with wireless subwoofer, bluetooth, and nfc]
+ANSWER:  Observation: 
+page
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:████████████████████████████████████████████████████████████████▉                                                                                                                                                           | 115/338 [01:26<02:42,  1.37it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+i am looking for a high power high definition sound bars, and price lower than 160.00 dollars
+Observation: 
+sony ht-ct370 2.1 channel 300w sound bar with wireless subwoofer, bluetooth, and nfc
+price: $100.0
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[description]    click[features]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[features]
+ANSWER:  Observation: 
+page
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:█████████████████████████████████████████████████████████████████▋                                                                                                                                                          | 116/338 [01:27<02:41,  1.38it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+i am looking for a high power high definition sound bars, and price lower than 160.00 dollars
+Observation: 
+ length & power output: 35.5-inch 300 w (2.1 channels) - ideal for 40-inch and larger tvs 
+ subwoofer: wireless 
+ connectivity: bluetooth and nfc 
+ wall mountable: yes; remote included: yes 
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[< prev]
+ANSWER:  
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:██████████████████████████████████████████████████████████████████▎                                                                                                                                                         | 117/338 [01:28<02:41,  1.37it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+i am looking for a high power high definition sound bars, and price lower than 160.00 dollars
+Observation: 
+sony ht-ct370 2.1 channel 300w sound bar with wireless subwoofer, bluetooth, and nfc
+price: $100.0
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[description]
+ANSWER:  Observation: 
+page
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:███████████████████████████████████████████████████████████████████                                                                                                                                                         | 118/338 [01:28<02:44,  1.34it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+i am looking for a high power high definition sound bars, and price lower than 160.00 dollars
+Observation: 
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[< prev]
+ANSWER:  
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:███████████████████████████████████████████████████████████████████▋                                                                                                                                                        | 119/338 [01:29<02:40,  1.37it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+i am looking for a high power high definition sound bars, and price lower than 160.00 dollars
+Observation: 
+sony ht-ct370 2.1 channel 300w sound bar with wireless subwoofer, bluetooth, and nfc
+price: $100.0
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[description]    click[features]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[back to search]
+ANSWER:  Observation: 
+page
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:████████████████████████████████████████████████████████████████████▍                                                                                                                                                       | 120/338 [01:30<02:44,  1.32it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+i am looking for a high power high definition sound bars, and price lower than 160.00 dollars
+Observation: 
+page 1 (total_results: 2)
+apex digital asb-800 40 hd sound home theater soundbar 250-watts
+$59.95
+uood soundbar for tv and pc,bluetooth surround sound system led
+$90.55
+Product image: <ImageHere>
+Available actions: click[back to search]    click[next >]    click[item - apex digital asb-800 40 hd sound home theater soundbar 250-watts with built-in subwoofer and bluetooth connection]    click[item - uood soundbar for tv and pc,bluetooth surround sound system led display wireless bluetooth speaker chargable desktop sound bars with subwoofer (color : rose gold)]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[item - apex digital asb-800 40 hd sound home theater soundbar 250-watts with built-in subwoofer and bluetooth connection]
+ANSWER:  
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:█████████████████████████████████████████████████████████████████████▏                                                                                                                                                      | 121/338 [01:31<02:50,  1.27it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+i am looking for a high power high definition sound bars, and price lower than 160.00 dollars
+Observation: 
+apex digital asb-800 40 hd sound home theater soundbar 250-watts with built-in subwoofer and bluetooth connection
+price: $59.95
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[features]    click[reviews]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[features]
+ANSWER:  Observation: 
+page
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:█████████████████████████████████████████████████████████████████████▊                                                                                                                                                      | 122/338 [01:32<02:45,  1.30it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+i am looking for a high power high definition sound bars, and price lower than 160.00 dollars
+Observation: 
+ simple one cable connectivity supports two aux and bluetooth input (wireless connection) methods 
+ led readout display supports three built-in sound effect modes 
+ preset subwoofer signal output interface 
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[< prev]
+ANSWER:  Think:
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:██████████████████████████████████████████████████████████████████████▌                                                                                                                                                     | 123/338 [01:33<02:56,  1.22it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+i am looking for a high power high definition sound bars, and price lower than 160.00 dollars
+Observation: 
+apex digital asb-800 40 hd sound home theater soundbar 250-watts with built-in subwoofer and bluetooth connection
+price: $59.95
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[description]    click[features]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[description]
+ANSWER:  Observation: 
+page
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:███████████████████████████████████████████████████████████████████████▏                                                                                                                                                    | 124/338 [01:33<02:54,  1.23it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+i am looking for a high power high definition sound bars, and price lower than 160.00 dollars
+Observation: 
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[< prev]
+ANSWER:  
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:███████████████████████████████████████████████████████████████████████▉                                                                                                                                                    | 125/338 [01:34<02:53,  1.23it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+i am looking for a high power high definition sound bars, and price lower than 160.00 dollars
+Observation: 
+apex digital asb-800 40 hd sound home theater soundbar 250-watts with built-in subwoofer and bluetooth connection
+price: $59.95
+rating: n.a.
+Product image: <ImageHere>
+Available actions: click[back to search]    click[< prev]    click[reviews]    click[buy now]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[< prev]
+ANSWER:  Observation: 
+page
+                                                                                                                                                                                                                                                                                 PROMPT:  Instruction:████████████████████████████████████████████████████████████████████████▌                                                                                                                                                   | 126/338 [01:35<03:01,  1.17it/s]
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+Observation: 
+size
+durahonn white antler chandelier (15 antlers + 9 lights)
+price: $379.99
+rating: n.a.
+Product image:
+Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
+
+Observation: You have clicked 18 antlers + 9 lights.
+Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+Action: click[Buy Now]
+
+Instruction:
+i am looking for a high power high definition sound bars, and price lower than 160.00 dollars
+Observation: 
+page 1 (total_results: 2)
+fegoclt stereo soundbar 10w computer speaker usb 3.5mm wired speaker
+$263.37
+fsysm stereo soundbar 10w computer speaker usb 3.5mm wired speaker
+$218.78
+Product image: <ImageHere>
+Available actions: click[back to search]    click[next >]    click[item - fegoclt stereo soundbar 10w computer speaker usb 3.5mm wired speaker hifi stereo sound bar for laptop computer phones]    click[item - fsysm stereo soundbar 10w computer speaker usb 3.5mm wired speaker hifi stereo sound bar for laptop computer phones]    
+
+Following the above format, output the Action you will take to complete the instructed task. Action: 
+GROUND TRUTH: click[back to search]
+ANSWER: 
