@@ -49,6 +49,7 @@ from huggingface_hub import Repository
 import wandb
 from torch.nn import CrossEntropyLoss
 import GPUtil
+import gc
 
 # Local application/library specific imports
 from models.custom_codellama import CodeLlamaForWebshop
@@ -146,10 +147,10 @@ def get_data(split, filter_search=True):
                 asin = find_image_asin(result['actions'], i) # asin = "none" if not found
                 raw_image_list.append(asin)
 
-            if len(valid_acts) > 5:  # do some action space reduction...
+            if len(valid_acts) > 4:  # do some action space reduction...
                 bad += 1
-                new_idxs = list(range(3)) + \
-                    random.sample(range(3, len(valid_acts)), 2)
+                new_idxs = list(range(2)) + \
+                    random.sample(range(2, len(valid_acts)), 2)
                 if idx not in new_idxs:
                     new_idxs = new_idxs[:-1] + [idx]
                 new_idxs = sorted(new_idxs)
@@ -334,39 +335,104 @@ def parse_args():
 
     return args
 
-examples = """Instruction:
-i am looking for an easy to install white antler chandelier with 18 antlers and 9 lights, and price lower than 410.00 dollars
-Observation: 
-page 1 (total results: 50)
-durahonn white antler chandelier, retro resin deer horn pendant light, e12 lamp holder, commercial and home lighting for cafes, bars, restaurants, living rooms (15 antlers + 9 lights)
-$379.99
-large antler chandelier 12 lights, bigmaii cabin retro faux antler light fixture rustic resin pendant light farmhouse candle style for living room, brown
-$100.0
-hubrin rustic antler chandelier, resin deer horn pendant light , antler light fixtures 9 light brown e12 candle style for home store (9 lamp arms + 6arms)
-$378.99
-Product image: 
-Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier, retro resin deer horn pendant light, e12 lamp holder, commercial and home lighting for cafes, bars, restaurants, living rooms (15 antlers + 9 lights)]    click[item - durahonn antler chandelier, 9 lights e12 bulbs, brown resin deer horn chandelier, retro antler pendant light for kitchen, bar, living room, dining room (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights, bigmaii cabin retro faux antler light fixture rustic resin pendant light farmhouse candle style for living room, brown]    
+# examples = """Instruction:
+# i am looking for an easy to install white antler chandelier with 18 antlers and 9 lights, and price lower than 410.00 dollars
+# Observation: 
+# page 1 (total results: 50)
+# durahonn white antler chandelier, retro resin deer horn pendant light, e12 lamp holder, commercial and home lighting for cafes, bars, restaurants, living rooms (15 antlers + 9 lights)
+# $379.99
+# large antler chandelier 12 lights, bigmaii cabin retro faux antler light fixture rustic resin pendant light farmhouse candle style for living room, brown
+# $100.0
+# hubrin rustic antler chandelier, resin deer horn pendant light , antler light fixtures 9 light brown e12 candle style for home store (9 lamp arms + 6arms)
+# $378.99
+# Product image: 
+# Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier, retro resin deer horn pendant light, e12 lamp holder, commercial and home lighting for cafes, bars, restaurants, living rooms (15 antlers + 9 lights)]    click[item - durahonn antler chandelier, 9 lights e12 bulbs, brown resin deer horn chandelier, retro antler pendant light for kitchen, bar, living room, dining room (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights, bigmaii cabin retro faux antler light fixture rustic resin pendant light farmhouse candle style for living room, brown]    
 
-Think:durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
-Action:click[item - durahonn white antler chandelier, retro resin deer horn pendant light, e12 lamp holder, commercial and home lighting for cafes, bars, restaurants, living rooms (15 antlers + 9 lights)]
+# Think:durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+# Action:click[item - durahonn white antler chandelier, retro resin deer horn pendant light, e12 lamp holder, commercial and home lighting for cafes, bars, restaurants, living rooms (15 antlers + 9 lights)]
+
+# Observation: 
+# size
+# durahonn white antler chandelier, retro resin deer horn pendant light, e12 lamp holder, commercial and home lighting for cafes, bars, restaurants, living rooms (15 antlers + 9 lights)
+# price: $379.99
+# rating: n.a.
+# Product image:
+# Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+# Think:For durahonn white antler chandelier, the item has options '18 antlers + 9 lights' and seems good to buy.
+# Action:click[18 antlers + 9 lights]
+
+# Observation: You have clicked 3 ounce (pack of 1).
+# Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+# Action: click[Buy Now]
+
+# """
+
+# examples = """Instruction:
+# i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+# Observation: 
+# page 1 (total results: 50)
+# durahonn white antler chandelier (15 antlers + 9 lights)
+# $379.99
+# large antler chandelier 12 lights
+# $100.0
+# Product image: 
+# Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+# Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+# Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
+
+# Observation: 
+# size
+# durahonn white antler chandelier (15 antlers + 9 lights)
+# price: $379.99
+# rating: n.a.
+# Product image:
+# Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
+
+# Think: For durahonn white antler chandelier, the item has options '18 antlers + 9 lights' and seems good to buy.
+# Action: click[18 antlers + 9 lights]
+
+# Observation: You have clicked 3 ounce (pack of 1).
+# Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
+
+# Action: click[Buy Now]
+
+# """
+
+examples = """Instruction:
+i am looking for a white antler chandelier with 18 antlers, and price lower than 410.00 dollars
+Observation: 
+page 1 (total results: 2)
+durahonn white antler chandelier (15 antlers + 9 lights)
+$379.99
+large antler chandelier 12 lights
+$100.0
+Product image: 
+Available actions: click[back to search]    click[next >]    click[item - durahonn white antler chandelier (15 antlers + 9 lights)]    click[item - large antler chandelier 12 lights]    
+
+Think: durahonn white antler chandelier is white antler chandelier less than 410 dollars. I can check durahonn first.
+Action:click[item - durahonn white antler chandelier (15 antlers + 9 lights)]
 
 Observation: 
 size
-durahonn white antler chandelier, retro resin deer horn pendant light, e12 lamp holder, commercial and home lighting for cafes, bars, restaurants, living rooms (15 antlers + 9 lights)
+durahonn white antler chandelier (15 antlers + 9 lights)
 price: $379.99
 rating: n.a.
 Product image:
 Available actions: click[back to search]    click[< prev]    click[description]    click[reviews]    click[18 antlers + 9 lights]    
 
-Think:For durahonn white antler chandelier, the item has options '18 antlers + 9 lights' and seems good to buy.
-Action:click[18 antlers + 9 lights]
+Think: The item has options '18 antlers + 9 lights' and seems good to buy.
+Action: click[18 antlers + 9 lights]
 
-Observation: You have clicked 3 ounce (pack of 1).
+Observation: You have clicked 18 antlers + 9 lights.
 Available actions: click[back to search]    click[< prev]    click[description]    click[buy now]    click[15 antlers + 9 lights]
 
 Action: click[Buy Now]
 
 """
+
 
 def generate_prompt(observation, action=None):
     obslist = observation.split('\n')
@@ -390,7 +456,7 @@ def generate_prompt(observation, action=None):
     # observation = observation.replace('[button] ', '[')
     # observation = observation.replace(' [button_]', ']')
     observation = observation.replace("instruction", "Instruction")
-    print("新的开始"+"="*20)
+    # print("新的开始"+"="*20)
     # print(observation)
 
     observation += "Product image: <ImageHere>\n"
@@ -401,7 +467,7 @@ def generate_prompt(observation, action=None):
     
     # print("分割线"+"="*20)
     # print(observation)
-    prompt = examples + f'{observation}\n\nFollowing the above format, output the Action you will take to complete the instructed task. Action:'
+    prompt = examples + f'{observation}\n\nFollowing the above format, output the Action you will take to complete the instructed task. Action: '
     return prompt
 
 
@@ -414,6 +480,59 @@ def truncate_actions(actions, thresh=10):
         else:
             result.append(act)
     return result
+
+
+def process_actions(observation, actions):
+    # Extract product names and prices from the observation
+    lines = observation.split('\n')
+    product_prices = {}
+    for line in lines:
+        if line.startswith('$'):
+            price = line
+            product_name = lines[lines.index(line) - 1]
+            product_prices[product_name] = price
+    
+    # Process each action
+    new_actions = []
+    for action in actions:
+        price = "-1.00"
+        if action.startswith('click[item - '):
+            # Extract the product name from the action
+            product_name = action[len('click[item - '):].rstrip(']')
+            # Append the price to the action if the product is in the product_prices dictionary
+            if product_name in product_prices:
+                price = product_prices[product_name]
+        new_actions.append((action, price))
+    
+    return new_actions
+
+
+def truncate_line(line, thresh=10):
+    if len(line.split(" ")) > thresh:
+        return " ".join(line.split(" ")[:10])
+    return line
+
+
+def make_concise_states(observation, actions):
+    actions_with_prices = dict(process_actions(observation, actions))
+    if observation.count('$') == 1: # do not filter on product page
+        return observation
+    lines = observation.split('\n')
+    new_state = []
+    num_products = 0
+    for i in range(len(lines) - 1):
+        line = lines[i]
+        if lines[i + 1].startswith('$') or lines[i + 1].startswith('price: '):
+            line_as_button = 'click[item - ' + line + ']'
+            if line_as_button in actions_with_prices:
+                new_state.append(truncate_line(line))
+                new_state.append(actions_with_prices[line_as_button])
+                num_products += 1
+        elif line.startswith('$'):
+            continue
+        else:
+            new_state.append(line)
+    return '\n'.join(new_state).replace('total results: 50', f'total_results: {num_products}')
 
 
 def main():
@@ -547,7 +666,8 @@ def main():
         step = 0
         avg_train_loss = 0.0
 
-        for i in train_idx:
+        for i in train_idx[:100]:
+            # print(i)
             data = train_dataset[i]
             states = data['states']
             actions = data['actions']
@@ -563,20 +683,25 @@ def main():
                     image = Image.new('RGB', (224, 224), (255, 255, 255)) # this is rare
             image = train_processor(image).unsqueeze(0).to('cuda:{}'.format(0))
 
-            '''if len(states.split("[button]")) > 6:
-                states = "[button]".join(states.split("[button]")[:8])
-            
-            temp_states = []
-            for i, s in enumerate(states.split("[button]")):
-                words = s.split(" ")
-                if i > 0 and len(words) > 12:
-                    temp_states.append(" ".join(words[:12]))
-                else:
-                    temp_states.append(s)
-            states = "[button]".join(temp_states)
+            states = make_concise_states(states, actions)
 
-            obs = states# + "\n Available actions: " + ", ".join(truncate_actions(actions))'''
+            # print("---------+++++++++++++PROCESSED ACTIONS")
+            # print(process_actions(states, actions))
+
             prompt = generate_prompt(states, actions)
+            num_tokens = llama_tokenizer(
+                prompt,
+                truncation=False,
+                padding=False,
+                return_tensors='pt',
+            )['input_ids'].shape[-1]
+
+            if num_tokens > 680:
+                bar.update(1)
+                continue
+
+            # print("=================---------------===============")
+            # print(prompt)
             tokenized_labels = llama_tokenizer(
                 actions[labels],
                 truncation=True,
@@ -585,23 +710,24 @@ def main():
                 return_tensors='pt',
             )['input_ids']
 
-            import gc
+            # import gc
             gc.collect()
-            print("BEfore forward")
-            GPUtil.showUtilization()
+            # print("Before forward")
+            # GPUtil.showUtilization()
+            # print("PROMPT LENGTH=", len(prompt.split(' ')))
 
             loss = model(prompt, [image], labels=tokenized_labels) / args.gradient_accumulation_steps
-            print("zha le ma???????????????????????????????????????????????????????")
+            # print("zha le ma???????????????????????????????????????????????????????")
             
-            import gc
+            # import gc
             gc.collect()
-            print("After forward")
-            GPUtil.showUtilization()
+            # print("After forward")
+            # GPUtil.showUtilization()
 
             loss.backward()
             gc.collect()
-            print("After backward")
-            GPUtil.showUtilization()
+            # print("After backward")
+            # GPUtil.showUtilization()
 
             if step % args.gradient_accumulation_steps == 0 or step == len(train_idx) - 1:
                 optimizer.step()
@@ -615,6 +741,7 @@ def main():
         step = 0
         avg_train_loss = 0.0
         model.eval()
+        num_correct = 0
         with torch.no_grad():
 
             for i in eval_idx:
@@ -638,23 +765,11 @@ def main():
                         image = Image.new('RGB', (224, 224), (255, 255, 255)) # this is rare
                 image = eval_processor(image).unsqueeze(0).to('cuda:{}'.format(0))
 
-                '''if len(states.split("[button]")) > 6:
-                    states = "[button]".join(states.split("[button]")[:8])
-                
-                temp_states = []
-                for i, s in enumerate(states.split("[button]")):
-                    words = s.split(" ")
-                    if i > 0 and len(words) > 12:
-                        temp_states.append(" ".join(words[:12]))
-                    else:
-                        temp_states.append(s)
-                states = "[button]".join(temp_states)
+                states = make_concise_states(states, actions)
 
-                obs = states# + "\n Available actions: " + ", ".join(truncate_actions(actions))'''
                 prompt = generate_prompt(states, actions)
-                print("=============================================================================================================")
-                # print("PROMPT: ", prompt)
-                print("GROUND TRUTH:", actions[labels])
+                # print("=============================================================================================================")
+                
                 tokenized_labels = llama_tokenizer(
                     actions[labels],
                     truncation=True,
@@ -662,21 +777,32 @@ def main():
                     padding=False,
                     return_tensors='pt',
                 )['input_ids']
-                answer = model.generate(prompt, [image])
+                answer = model.generate(prompt, [image]).strip()
                 print("ANSWER: ", answer)
+                isPrint = True
+                if answer.startswith('click[') and len(answer) > 6 + 4: # the shortest thing to click on is "prev"
+                    # print("Good answer")
+
+                    answer_content = answer[6:]
+                    if actions[labels][6:].startswith(answer_content) or answer_content.startswith(actions[labels][6:]):
+                        # print("CORRECT")
+                        num_correct += 1
+                        isPrint = False
+                
+                if isPrint:
+                    print("PROMPT: ", prompt)
+                    print("GROUND TRUTH:", actions[labels])
+                    print("ANSWER: ", answer)
+
                 bar.update(1)
+            print("Accuracy: ", num_correct / len(eval_idx))
         bar.close()
 
-        # if args.checkpointing_steps == "epoch":
-        #     output_dir = f"epoch_{epoch}"
-        #     if output_folder is not None:
-        #         output_dir = os.path.join(output_folder, output_dir)
-        #     os.makedirs(output_dir, exist_ok=True)
-        #     unwrapped_model = accelerator.unwrap_model(model)
-        #     torch.save(unwrapped_model.state_dict(),
-        #                os.path.join(output_dir, "model.pth"))
-
-        #     # accelerator.save_state(output_dir)
+        # model.to('cpu')
+        # torch.cuda.empty_cache()
+        
+        # # torch.save(model.state_dict(), f'model_state_dict_epoch_{epoch}.pth')
+        # model.to('cuda:0')
 
     # if output_folder is not None:
     #     with open(os.path.join(output_folder, "all_results.json"), "w") as f:
